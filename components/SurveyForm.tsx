@@ -1355,9 +1355,7 @@ export default function SurveyForm() {
                 disabled={submitting}
                 className="submit-button"
               >
-                {submitting
-                  ? "Submitting..."
-                  : "Submit Your Cosmic Fits Survey"}
+                {submitting ? "Submitting..." : "Submit"}
               </button>
             </div>
           </form>
