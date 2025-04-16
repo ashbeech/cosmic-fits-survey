@@ -80,7 +80,7 @@ export default function SurveyForm() {
 
   if (submitted) {
     return (
-      <div className="bg-white p-8 rounded-lg shadow-md max-w-2xl mx-auto">
+      <div className="bg-white p-8 rounded-lg shadow-md max-w-2xl mx-auto my-12">
         <h2 className="text-2xl font-bold text-green-600 mb-4">Thank You!</h2>
         <p className="mb-4">
           Your cosmic fits survey has been submitted successfully. We appreciate
@@ -91,7 +91,7 @@ export default function SurveyForm() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg max-w-3xl mx-auto mb-16">
+    <div className="bg-white rounded-lg shadow-lg max-w-3xl mx-auto mb-16 w-full">
       <div className="bg-indigo-600 text-white px-6 py-4 rounded-t-lg">
         <h2 className="text-xl font-semibold">Your Cosmic Style Journey</h2>
         <p className="text-indigo-100 text-sm mt-1">
@@ -106,15 +106,18 @@ export default function SurveyForm() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-8">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="p-6 space-y-12 md:space-y-16"
+      >
         {/* Question 1: Birthdate */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Full Birthdate (If time is unknown, put 00:00am)
           </label>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">
+              <label className="block text-sm font-medium text-gray-500 mb-2">
                 Date
               </label>
               <input
@@ -123,13 +126,13 @@ export default function SurveyForm() {
                 {...register("birthdate", { required: true })}
               />
               {errors.birthdate && (
-                <span className="text-red-500 text-xs mt-1 block">
+                <span className="text-red-500 text-xs mt-2 block">
                   This field is required
                 </span>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">
+              <label className="block text-sm font-medium text-gray-500 mb-2">
                 Time
               </label>
               <input
@@ -138,7 +141,7 @@ export default function SurveyForm() {
                 {...register("birthtime", { required: true })}
               />
               {errors.birthtime && (
-                <span className="text-red-500 text-xs mt-1 block">
+                <span className="text-red-500 text-xs mt-2 block">
                   This field is required
                 </span>
               )}
@@ -147,8 +150,8 @@ export default function SurveyForm() {
         </div>
 
         {/* Question 2: Birthplace */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Place of Birth (City, Country)
           </label>
           <input
@@ -158,15 +161,15 @@ export default function SurveyForm() {
             {...register("birthplace", { required: true })}
           />
           {errors.birthplace && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 3: Music Genres */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             What music genres meant the most to you between ages 10–20? (Choose
             up to 3)
           </label>
@@ -184,7 +187,7 @@ export default function SurveyForm() {
             ].map((genre) => (
               <div
                 key={genre}
-                className="flex items-center space-x-2 bg-white p-2 rounded border border-gray-200 hover:border-indigo-300 transition"
+                className="flex items-center space-x-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
               >
                 <input
                   type="checkbox"
@@ -205,8 +208,8 @@ export default function SurveyForm() {
         </div>
 
         {/* Question 4: Artists */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Which artists or bands shaped your identity as a teen? (add up to 5)
           </label>
           <textarea
@@ -216,15 +219,15 @@ export default function SurveyForm() {
             {...register("artists", { required: true })}
           ></textarea>
           {errors.artists && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 5: Movies/Shows */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             What kind of movies or shows were you drawn to growing up? (Add up
             to 5)
           </label>
@@ -235,15 +238,15 @@ export default function SurveyForm() {
             {...register("moviesShows", { required: true })}
           ></textarea>
           {errors.moviesShows && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 6: Subcultures */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Were you part of any subcultures or style scenes as a teen?
             Describe.
           </label>
@@ -254,18 +257,18 @@ export default function SurveyForm() {
             {...register("subcultures", { required: true })}
           ></textarea>
           {errors.subcultures && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 7: Fashion Attitude */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             How did you feel about mainstream fashion growing up?
           </label>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {[
               "Loved it",
               "Followed it loosely",
@@ -313,15 +316,15 @@ export default function SurveyForm() {
             </div>
           </div>
           {errors.fashionAttitude && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 8: Style Icons */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Who were your early style icons (real, fictional, celebrity,
             friend)?
           </label>
@@ -332,18 +335,18 @@ export default function SurveyForm() {
             {...register("styleIcons", { required: true })}
           ></textarea>
           {errors.styleIcons && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 9: Style Words */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Describe your current style in 3 words.
           </label>
-          <div className="space-y-3">
+          <div className="space-y-4">
             <div className="flex items-center">
               <div className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-medium mr-3">
                 1
@@ -381,15 +384,15 @@ export default function SurveyForm() {
           {(errors.styleWords?.word1 ||
             errors.styleWords?.word2 ||
             errors.styleWords?.word3) && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               All three words are required
             </span>
           )}
         </div>
 
         {/* Question 10: Fabric Preferences */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             What types of fabrics or textures do you love wearing?
           </label>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -407,7 +410,7 @@ export default function SurveyForm() {
             ].map((fabric) => (
               <div
                 key={fabric}
-                className="flex items-center space-x-2 bg-white p-2 rounded border border-gray-200 hover:border-indigo-300 transition"
+                className="flex items-center space-x-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
               >
                 <input
                   type="checkbox"
@@ -428,18 +431,18 @@ export default function SurveyForm() {
         </div>
 
         {/* Question 11: Preferences */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Which do you prefer?
           </label>
 
-          <div className="space-y-6">
+          <div className="space-y-8">
             <div className="space-y-2">
-              <div className="flex justify-between text-sm text-gray-600 mb-1">
+              <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Comfort</span>
                 <span>Structure</span>
               </div>
-              <div className="flex items-center space-x-4 bg-white p-3 rounded border border-gray-200">
+              <div className="flex items-center space-x-4 bg-white p-4 rounded border border-gray-200">
                 <input
                   type="radio"
                   id="comfort"
@@ -463,11 +466,11 @@ export default function SurveyForm() {
             </div>
 
             <div className="space-y-2">
-              <div className="flex justify-between text-sm text-gray-600 mb-1">
+              <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Simple</span>
                 <span>Layered</span>
               </div>
-              <div className="flex items-center space-x-4 bg-white p-3 rounded border border-gray-200">
+              <div className="flex items-center space-x-4 bg-white p-4 rounded border border-gray-200">
                 <input
                   type="radio"
                   id="simple"
@@ -491,11 +494,11 @@ export default function SurveyForm() {
             </div>
 
             <div className="space-y-2">
-              <div className="flex justify-between text-sm text-gray-600 mb-1">
+              <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Neutrals</span>
                 <span>Color</span>
               </div>
-              <div className="flex items-center space-x-4 bg-white p-3 rounded border border-gray-200">
+              <div className="flex items-center space-x-4 bg-white p-4 rounded border border-gray-200">
                 <input
                   type="radio"
                   id="neutrals"
@@ -522,18 +525,18 @@ export default function SurveyForm() {
           {(errors.comfortVsStructure ||
             errors.simpleVsLayered ||
             errors.neutralsVsColor) && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               Please make all three selections
             </span>
           )}
         </div>
 
         {/* Question 12: Outfit Building */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             How do you usually build an outfit?
           </label>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {[
               "Based on mood",
               "Based on utility",
@@ -581,15 +584,15 @@ export default function SurveyForm() {
             </div>
           </div>
           {errors.outfitBuilding && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 13: Style Evolution */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             How has your style changed over the years? What's stayed the same?
           </label>
           <textarea
@@ -599,18 +602,18 @@ export default function SurveyForm() {
             {...register("styleEvolution", { required: true })}
           ></textarea>
           {errors.styleEvolution && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 14: Blend vs Standout */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Do you feel more like yourself when you blend in or stand out?
           </label>
-          <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-4">
+          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
             <div className="flex-1 bg-white p-4 rounded border border-gray-200 hover:border-indigo-300 transition">
               <div className="flex items-center space-x-3">
                 <input
@@ -647,18 +650,18 @@ export default function SurveyForm() {
             </div>
           </div>
           {errors.blendVsStandout && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 15: Express vs Shift */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Do you dress to express how you feel, or to shift how you feel?
           </label>
-          <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-4">
+          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
             <div className="flex-1 bg-white p-4 rounded border border-gray-200 hover:border-indigo-300 transition">
               <div className="flex items-center space-x-3">
                 <input
@@ -695,15 +698,15 @@ export default function SurveyForm() {
             </div>
           </div>
           {errors.expressVsShift && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 16: Style Feedback */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             What kind of feedback do you get on your style from others?
           </label>
           <textarea
@@ -713,15 +716,15 @@ export default function SurveyForm() {
             {...register("styleFeedback", { required: true })}
           ></textarea>
           {errors.styleFeedback && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 17: Feeling Powerful */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             What makes you feel powerful in your clothing?
           </label>
           <textarea
@@ -731,15 +734,15 @@ export default function SurveyForm() {
             {...register("feelingPowerful", { required: true })}
           ></textarea>
           {errors.feelingPowerful && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 18: Style Avoidance */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             What do you avoid wearing—no matter how trendy or flattering?
           </label>
           <textarea
@@ -749,15 +752,15 @@ export default function SurveyForm() {
             {...register("styleAvoidance", { required: true })}
           ></textarea>
           {errors.styleAvoidance && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 19: Style Ruts */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Do you go through style "ruts" or phases where nothing feels right?
             Describe.
           </label>
@@ -768,15 +771,15 @@ export default function SurveyForm() {
             {...register("styleRuts", { required: true })}
           ></textarea>
           {errors.styleRuts && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 20: Wardrobe Story */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             If your wardrobe told a story, what would it be about?
           </label>
           <textarea
@@ -786,15 +789,15 @@ export default function SurveyForm() {
             {...register("wardrobeStory", { required: true })}
           ></textarea>
           {errors.wardrobeStory && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 21: Color Palettes */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             What color palettes feel most natural to you?
           </label>
           <div className="grid grid-cols-1 gap-3">
@@ -828,8 +831,8 @@ export default function SurveyForm() {
         </div>
 
         {/* Question 22: Fabric Dislikes */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Are there any textures or materials you dislike wearing? Why?
           </label>
           <textarea
@@ -839,15 +842,15 @@ export default function SurveyForm() {
             {...register("fabricDislikes", { required: true })}
           ></textarea>
           {errors.fabricDislikes && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 23: Fabric Importance */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             On a scale of 1–10, how important is the feel of fabric to you?
           </label>
           <div className="relative pt-1 px-2">
@@ -876,15 +879,15 @@ export default function SurveyForm() {
             </div>
           </div>
           {errors.fabricImportance && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 24: Style Communication */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             What do you wish your style communicated about you?
           </label>
           <textarea
@@ -894,15 +897,15 @@ export default function SurveyForm() {
             {...register("styleCommunication", { required: true })}
           ></textarea>
           {errors.styleCommunication && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 25: Becoming Person */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             What kind of person are you becoming—and how does that influence
             your wardrobe?
           </label>
@@ -913,15 +916,15 @@ export default function SurveyForm() {
             {...register("becomingPerson", { required: true })}
           ></textarea>
           {errors.becomingPerson && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 26: Past Style */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Is there a version of you from the past you'd like to channel again
             through fashion?
           </label>
@@ -932,15 +935,15 @@ export default function SurveyForm() {
             {...register("pastStyle", { required: true })}
           ></textarea>
           {errors.pastStyle && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         {/* Question 27: Dream Wardrobe */}
-        <div className="p-4 bg-gray-50 rounded-md shadow-sm">
-          <label className="block text-gray-700 text-lg font-medium mb-3 required">
+        <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <label className="block text-gray-700 text-lg font-medium mb-4 required">
             Describe your dream wardrobe. No limits.
           </label>
           <textarea
@@ -950,14 +953,14 @@ export default function SurveyForm() {
             {...register("dreamWardrobe", { required: true })}
           ></textarea>
           {errors.dreamWardrobe && (
-            <span className="text-red-500 text-xs mt-1 block">
+            <span className="text-red-500 text-xs mt-2 block">
               This field is required
             </span>
           )}
         </div>
 
         <div className="pt-6">
-          <div className="bg-indigo-50 rounded-md p-4 mb-6 border border-indigo-100">
+          <div className="bg-indigo-50 rounded-md p-6 mb-8 border border-indigo-100">
             <p className="text-sm text-indigo-700">
               Thank you for taking the time to complete this survey. Your
               responses will help us understand your unique style journey.
@@ -966,7 +969,7 @@ export default function SurveyForm() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-3 px-6 bg-indigo-600 text-white text-lg font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-colors duration-200"
+            className="w-full py-4 px-6 bg-indigo-600 text-white text-lg font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-colors duration-200"
           >
             {submitting ? "Submitting..." : "Submit Your Cosmic Fits Survey"}
           </button>
