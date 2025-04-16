@@ -121,7 +121,9 @@ export default function SurveyForm() {
   });
 
   // Form error state
-  const [errors, setErrors] = useState<ErrorState>({});
+  const [errors, setErrors] = useState<ErrorState>({
+    name: "",
+  });
 
   // Form submission state
   const [submitting, setSubmitting] = useState(false);
@@ -199,13 +201,11 @@ export default function SurveyForm() {
 
   // Validate the form
   const validateForm = () => {
-    const newErrors: ErrorState = {};
+    const newErrors: ErrorState = {
+      name: "",
+    };
 
     // Required fields
-    if (!formData.birthdate) {
-      newErrors.name = "You can enter anything you like";
-    }
-
     if (!formData.birthdate) {
       newErrors.birthdate = "Your date of birth is key to your cosmic fit";
     }
