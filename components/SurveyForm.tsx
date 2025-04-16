@@ -110,7 +110,7 @@ export default function SurveyForm() {
     wardrobeStory: "",
     colorPalettes: [],
     fabricDislikes: "",
-    fabricImportance: 5,
+    fabricImportance: 1,
     styleCommunication: "",
     becomingPerson: "",
     pastStyle: "",
@@ -754,13 +754,15 @@ export default function SurveyForm() {
                 Which do you prefer?
               </label>
 
-              <div className="space-y-8 max-w-lg mx-auto">
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm text-gray-600 mb-2">
-                    <span>Comfort</span>
-                    <span>Structure</span>
-                  </div>
-                  <div className="flex items-center space-x-4 bg-white p-4 rounded border border-gray-200">
+              <div className="preference-matrix">
+                <div className="preference-matrix-header">
+                  <div className="preference-matrix-option">1</div>
+                  <div className="preference-matrix-label"></div>
+                  <div className="preference-matrix-option">2</div>
+                </div>
+
+                <div className="preference-matrix-row">
+                  <div className="preference-matrix-option">
                     <input
                       type="radio"
                       id="comfort"
@@ -768,13 +770,13 @@ export default function SurveyForm() {
                       value="Comfort"
                       checked={formData.comfortVsStructure === "Comfort"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="preference-radio"
                     />
-                    <div className="flex-1 h-2 bg-gray-200 rounded relative">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="w-px h-full bg-gray-400"></span>
-                      </div>
-                    </div>
+                  </div>
+                  <div className="preference-matrix-label">
+                    Comfort / Structure
+                  </div>
+                  <div className="preference-matrix-option">
                     <input
                       type="radio"
                       id="structure"
@@ -782,17 +784,13 @@ export default function SurveyForm() {
                       value="Structure"
                       checked={formData.comfortVsStructure === "Structure"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="preference-radio"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm text-gray-600 mb-2">
-                    <span>Simple</span>
-                    <span>Layered</span>
-                  </div>
-                  <div className="flex items-center space-x-4 bg-white p-4 rounded border border-gray-200">
+                <div className="preference-matrix-row">
+                  <div className="preference-matrix-option">
                     <input
                       type="radio"
                       id="simple"
@@ -800,13 +798,13 @@ export default function SurveyForm() {
                       value="Simple"
                       checked={formData.simpleVsLayered === "Simple"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="preference-radio"
                     />
-                    <div className="flex-1 h-2 bg-gray-200 rounded relative">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="w-px h-full bg-gray-400"></span>
-                      </div>
-                    </div>
+                  </div>
+                  <div className="preference-matrix-label">
+                    Simple / Layered
+                  </div>
+                  <div className="preference-matrix-option">
                     <input
                       type="radio"
                       id="layered"
@@ -814,17 +812,13 @@ export default function SurveyForm() {
                       value="Layered"
                       checked={formData.simpleVsLayered === "Layered"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="preference-radio"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm text-gray-600 mb-2">
-                    <span>Neutrals</span>
-                    <span>Color</span>
-                  </div>
-                  <div className="flex items-center space-x-4 bg-white p-4 rounded border border-gray-200">
+                <div className="preference-matrix-row">
+                  <div className="preference-matrix-option">
                     <input
                       type="radio"
                       id="neutrals"
@@ -832,13 +826,13 @@ export default function SurveyForm() {
                       value="Neutrals"
                       checked={formData.neutralsVsColor === "Neutrals"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="preference-radio"
                     />
-                    <div className="flex-1 h-2 bg-gray-200 rounded relative">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="w-px h-full bg-gray-400"></span>
-                      </div>
-                    </div>
+                  </div>
+                  <div className="preference-matrix-label">
+                    Neutrals / Colour
+                  </div>
+                  <div className="preference-matrix-option">
                     <input
                       type="radio"
                       id="color"
@@ -846,7 +840,7 @@ export default function SurveyForm() {
                       value="Color"
                       checked={formData.neutralsVsColor === "Color"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="preference-radio"
                     />
                   </div>
                 </div>
@@ -1230,12 +1224,12 @@ export default function SurveyForm() {
               <label className="question-label required">
                 On a scale of 1–10, how important is the feel of fabric to you?
               </label>
-              <div className="relative pt-1 px-2 max-w-xl mx-auto">
-                <div className="flex justify-between text-xs text-gray-500 mb-3">
+              <div className="slider-container">
+                <div className="slider-labels">
                   <span>Not important</span>
                   <span>Extremely important</span>
                 </div>
-                <div className="bg-white p-4 rounded border border-gray-200">
+                <div className="slider-track">
                   <input
                     type="range"
                     min="1"
@@ -1243,15 +1237,8 @@ export default function SurveyForm() {
                     name="fabricImportance"
                     value={formData.fabricImportance}
                     onChange={handleRangeChange}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    className="slider-input"
                   />
-                  <div className="flex justify-between w-full px-1 text-xs text-gray-500 mt-2">
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                      <span key={num} className="px-1">
-                        {num}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               </div>
               {errors.fabricImportance && (
