@@ -510,7 +510,7 @@ export default function SurveyForm() {
                 ].map((genre) => (
                   <div
                     key={genre}
-                    className="flex items-center space-x-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
+                    className="flex items-center space-x-2 py-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
                   >
                     <input
                       type="checkbox"
@@ -618,7 +618,7 @@ export default function SurveyForm() {
                 ].map((option) => (
                   <div
                     key={option}
-                    className="flex items-center space-x-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
+                    className="flex items-center space-x-2 py-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
                   >
                     <input
                       type="radio"
@@ -637,7 +637,7 @@ export default function SurveyForm() {
                     </label>
                   </div>
                 ))}
-                <div className="flex items-center space-x-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition">
+                <div className="flex items-center space-x-2 py-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition">
                   <input
                     type="radio"
                     id="fashion-other"
@@ -699,7 +699,7 @@ export default function SurveyForm() {
                 Describe your current style in 3 words.
               </label>
               <div className="space-y-4 max-w-md mx-auto">
-                <div className="flex items-center">
+                <div className="flex items-center py-2">
                   <input
                     type="text"
                     name="styleWords.word1"
@@ -709,7 +709,7 @@ export default function SurveyForm() {
                     placeholder="First word"
                   />
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center py-2">
                   <input
                     type="text"
                     name="styleWords.word2"
@@ -719,7 +719,7 @@ export default function SurveyForm() {
                     placeholder="Second word"
                   />
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center py-2">
                   <input
                     type="text"
                     name="styleWords.word3"
@@ -757,7 +757,7 @@ export default function SurveyForm() {
                 ].map((fabric) => (
                   <div
                     key={fabric}
-                    className="flex items-center space-x-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
+                    className="flex items-center space-x-2 py-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
                   >
                     <input
                       type="checkbox"
@@ -900,7 +900,7 @@ export default function SurveyForm() {
                 ].map((option) => (
                   <div
                     key={option}
-                    className="flex items-center space-x-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
+                    className="flex items-center space-x-2 py-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
                   >
                     <input
                       type="radio"
@@ -919,7 +919,7 @@ export default function SurveyForm() {
                     </label>
                   </div>
                 ))}
-                <div className="flex items-center space-x-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition">
+                <div className="flex items-center space-x-2 py-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition">
                   <input
                     type="radio"
                     id="outfit-other"
@@ -1208,7 +1208,7 @@ export default function SurveyForm() {
                 ].map((palette) => (
                   <div
                     key={palette}
-                    className="flex items-center space-x-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
+                    className="flex items-center space-x-2 py-2 bg-white p-3 rounded border border-gray-200 hover:border-indigo-300 transition"
                   >
                     <input
                       type="checkbox"
