@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 
 type FormData = {
   birthdate: string;
@@ -42,17 +41,290 @@ type FormData = {
   dreamWardrobe: string;
 };
 
+type ErrorState = {
+  birthdate?: string;
+  birthtime?: string;
+  birthplace?: string;
+  musicGenres?: string;
+  artists?: string;
+  moviesShows?: string;
+  subcultures?: string;
+  fashionAttitude?: string;
+  styleIcons?: string;
+  styleWords?: {
+    word1?: string;
+    word2?: string;
+    word3?: string;
+  };
+  comfortVsStructure?: string;
+  simpleVsLayered?: string;
+  neutralsVsColor?: string;
+  outfitBuilding?: string;
+  styleEvolution?: string;
+  blendVsStandout?: string;
+  expressVsShift?: string;
+  styleFeedback?: string;
+  feelingPowerful?: string;
+  styleAvoidance?: string;
+  styleRuts?: string;
+  wardrobeStory?: string;
+  fabricDislikes?: string;
+  fabricImportance?: string;
+  styleCommunication?: string;
+  becomingPerson?: string;
+  pastStyle?: string;
+  dreamWardrobe?: string;
+};
+
 export default function SurveyForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  // Initial form state
+  const [formData, setFormData] = useState<FormData>({
+    birthdate: "",
+    birthtime: "",
+    birthplace: "",
+    musicGenres: [],
+    artists: "",
+    moviesShows: "",
+    subcultures: "",
+    fashionAttitude: "",
+    fashionAttitudeOther: "",
+    styleIcons: "",
+    styleWords: {
+      word1: "",
+      word2: "",
+      word3: "",
+    },
+    fabricPreferences: [],
+    comfortVsStructure: "",
+    simpleVsLayered: "",
+    neutralsVsColor: "",
+    outfitBuilding: "",
+    outfitBuildingOther: "",
+    styleEvolution: "",
+    blendVsStandout: "",
+    expressVsShift: "",
+    styleFeedback: "",
+    feelingPowerful: "",
+    styleAvoidance: "",
+    styleRuts: "",
+    wardrobeStory: "",
+    colorPalettes: [],
+    fabricDislikes: "",
+    fabricImportance: 5,
+    styleCommunication: "",
+    becomingPerson: "",
+    pastStyle: "",
+    dreamWardrobe: "",
+  });
+
+  // Form error state
+  const [errors, setErrors] = useState<ErrorState>({});
+
+  // Form submission state
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = async (data: FormData) => {
+  // Handle input changes for text, textarea, and select inputs
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+
+    if (name.includes(".")) {
+      // Handle nested objects like styleWords.word1
+      const [parent, child] = name.split(".");
+      setFormData((prev) => ({
+        ...prev,
+        [parent]: {
+          ...prev[parent as keyof FormData],
+          [child]: value,
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  // Handle checkbox changes
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, checked } = e.target;
+
+    setFormData((prev) => {
+      const currentArray = prev[name as keyof FormData] as string[];
+
+      // Add or remove the value from the array
+      const updatedArray = checked
+        ? [...currentArray, value]
+        : currentArray.filter((item) => item !== value);
+
+      return {
+        ...prev,
+        [name]: updatedArray,
+      };
+    });
+  };
+
+  // Handle range input change
+  const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: parseInt(value),
+    }));
+  };
+
+  // Validate the form
+  const validateForm = () => {
+    const newErrors: ErrorState = {};
+
+    // Required fields
+    if (!formData.birthdate) {
+      newErrors.birthdate = "This field is required";
+    }
+
+    if (!formData.birthtime) {
+      newErrors.birthtime = "This field is required";
+    }
+
+    if (!formData.birthplace) {
+      newErrors.birthplace = "This field is required";
+    }
+
+    if (!formData.artists) {
+      newErrors.artists = "This field is required";
+    }
+
+    if (!formData.moviesShows) {
+      newErrors.moviesShows = "This field is required";
+    }
+
+    if (!formData.subcultures) {
+      newErrors.subcultures = "This field is required";
+    }
+
+    if (!formData.fashionAttitude) {
+      newErrors.fashionAttitude = "This field is required";
+    }
+
+    if (!formData.styleIcons) {
+      newErrors.styleIcons = "This field is required";
+    }
+
+    // Style words validation
+    const styleWordsErrors: { word1?: string; word2?: string; word3?: string } =
+      {};
+
+    if (!formData.styleWords.word1) {
+      styleWordsErrors.word1 = "Required";
+    }
+
+    if (!formData.styleWords.word2) {
+      styleWordsErrors.word2 = "Required";
+    }
+
+    if (!formData.styleWords.word3) {
+      styleWordsErrors.word3 = "Required";
+    }
+
+    if (Object.keys(styleWordsErrors).length > 0) {
+      newErrors.styleWords = styleWordsErrors;
+    }
+
+    // Preference selections
+    if (!formData.comfortVsStructure) {
+      newErrors.comfortVsStructure = "Please make a selection";
+    }
+
+    if (!formData.simpleVsLayered) {
+      newErrors.simpleVsLayered = "Please make a selection";
+    }
+
+    if (!formData.neutralsVsColor) {
+      newErrors.neutralsVsColor = "Please make a selection";
+    }
+
+    if (!formData.outfitBuilding) {
+      newErrors.outfitBuilding = "This field is required";
+    }
+
+    if (!formData.styleEvolution) {
+      newErrors.styleEvolution = "This field is required";
+    }
+
+    if (!formData.blendVsStandout) {
+      newErrors.blendVsStandout = "This field is required";
+    }
+
+    if (!formData.expressVsShift) {
+      newErrors.expressVsShift = "This field is required";
+    }
+
+    if (!formData.styleFeedback) {
+      newErrors.styleFeedback = "This field is required";
+    }
+
+    if (!formData.feelingPowerful) {
+      newErrors.feelingPowerful = "This field is required";
+    }
+
+    if (!formData.styleAvoidance) {
+      newErrors.styleAvoidance = "This field is required";
+    }
+
+    if (!formData.styleRuts) {
+      newErrors.styleRuts = "This field is required";
+    }
+
+    if (!formData.wardrobeStory) {
+      newErrors.wardrobeStory = "This field is required";
+    }
+
+    if (!formData.fabricDislikes) {
+      newErrors.fabricDislikes = "This field is required";
+    }
+
+    if (!formData.styleCommunication) {
+      newErrors.styleCommunication = "This field is required";
+    }
+
+    if (!formData.becomingPerson) {
+      newErrors.becomingPerson = "This field is required";
+    }
+
+    if (!formData.pastStyle) {
+      newErrors.pastStyle = "This field is required";
+    }
+
+    if (!formData.dreamWardrobe) {
+      newErrors.dreamWardrobe = "This field is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      // Scroll to the first error
+      const firstErrorElement = document.querySelector(".text-red-500");
+      if (firstErrorElement) {
+        firstErrorElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+      return;
+    }
+
     setSubmitting(true);
     setError(null);
 
@@ -62,7 +334,7 @@ export default function SurveyForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -70,6 +342,8 @@ export default function SurveyForm() {
       }
 
       setSubmitted(true);
+      // Scroll to top to show success message
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       setError("There was an error submitting your survey. Please try again.");
       console.error(err);
@@ -108,10 +382,7 @@ export default function SurveyForm() {
         </div>
       )}
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="p-6 space-y-12 md:space-y-16"
-      >
+      <form onSubmit={handleSubmit} className="p-6 space-y-12 md:space-y-16">
         {/* Question 1: Birthdate */}
         <div className="p-6 bg-gray-50 rounded-md shadow-sm">
           <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
@@ -124,12 +395,14 @@ export default function SurveyForm() {
               </label>
               <input
                 type="date"
+                name="birthdate"
+                value={formData.birthdate}
+                onChange={handleInputChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                {...register("birthdate", { required: true })}
               />
               {errors.birthdate && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
-                  This field is required
+                  {errors.birthdate}
                 </span>
               )}
             </div>
@@ -139,12 +412,14 @@ export default function SurveyForm() {
               </label>
               <input
                 type="time"
+                name="birthtime"
+                value={formData.birthtime}
+                onChange={handleInputChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                {...register("birthtime", { required: true })}
               />
               {errors.birthtime && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
-                  This field is required
+                  {errors.birthtime}
                 </span>
               )}
             </div>
@@ -158,13 +433,15 @@ export default function SurveyForm() {
           </label>
           <input
             type="text"
+            name="birthplace"
+            value={formData.birthplace}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             placeholder="e.g., New York, USA"
-            {...register("birthplace", { required: true })}
           />
           {errors.birthplace && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.birthplace}
             </span>
           )}
         </div>
@@ -194,9 +471,11 @@ export default function SurveyForm() {
                 <input
                   type="checkbox"
                   id={`genre-${genre}`}
+                  name="musicGenres"
                   value={genre}
+                  checked={formData.musicGenres.includes(genre)}
+                  onChange={handleCheckboxChange}
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("musicGenres")}
                 />
                 <label
                   htmlFor={`genre-${genre}`}
@@ -207,6 +486,11 @@ export default function SurveyForm() {
               </div>
             ))}
           </div>
+          {errors.musicGenres && (
+            <span className="text-red-500 text-xs mt-2 block text-center">
+              {errors.musicGenres}
+            </span>
+          )}
         </div>
 
         {/* Question 4: Artists */}
@@ -215,14 +499,16 @@ export default function SurveyForm() {
             Which artists or bands shaped your identity as a teen? (add up to 5)
           </label>
           <textarea
+            name="artists"
+            value={formData.artists}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="e.g., Radiohead, Beyoncé, Taylor Swift..."
-            {...register("artists", { required: true })}
           ></textarea>
           {errors.artists && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.artists}
             </span>
           )}
         </div>
@@ -234,14 +520,16 @@ export default function SurveyForm() {
             to 5)
           </label>
           <textarea
+            name="moviesShows"
+            value={formData.moviesShows}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="e.g., Science fiction, romantic comedies, anime..."
-            {...register("moviesShows", { required: true })}
           ></textarea>
           {errors.moviesShows && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.moviesShows}
             </span>
           )}
         </div>
@@ -253,14 +541,16 @@ export default function SurveyForm() {
             Describe.
           </label>
           <textarea
+            name="subcultures"
+            value={formData.subcultures}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="e.g., Punk, skater, goth, preppy..."
-            {...register("subcultures", { required: true })}
           ></textarea>
           {errors.subcultures && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.subcultures}
             </span>
           )}
         </div>
@@ -284,9 +574,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id={`fashion-${option}`}
+                  name="fashionAttitude"
                   value={option}
+                  checked={formData.fashionAttitude === option}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("fashionAttitude", { required: true })}
                 />
                 <label
                   htmlFor={`fashion-${option}`}
@@ -300,9 +592,11 @@ export default function SurveyForm() {
               <input
                 type="radio"
                 id="fashion-other"
+                name="fashionAttitude"
                 value="Other"
+                checked={formData.fashionAttitude === "Other"}
+                onChange={handleInputChange}
                 className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                {...register("fashionAttitude", { required: true })}
               />
               <label htmlFor="fashion-other" className="text-sm text-gray-700">
                 Other
@@ -311,15 +605,17 @@ export default function SurveyForm() {
             <div className="pl-6">
               <input
                 type="text"
+                name="fashionAttitudeOther"
+                value={formData.fashionAttitudeOther}
+                onChange={handleInputChange}
                 placeholder="Please specify"
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 mt-1"
-                {...register("fashionAttitudeOther")}
               />
             </div>
           </div>
           {errors.fashionAttitude && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.fashionAttitude}
             </span>
           )}
         </div>
@@ -331,14 +627,16 @@ export default function SurveyForm() {
             friend)?
           </label>
           <textarea
+            name="styleIcons"
+            value={formData.styleIcons}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="e.g., Princess Diana, David Bowie, Rihanna..."
-            {...register("styleIcons", { required: true })}
           ></textarea>
           {errors.styleIcons && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.styleIcons}
             </span>
           )}
         </div>
@@ -355,9 +653,11 @@ export default function SurveyForm() {
               </div>
               <input
                 type="text"
+                name="styleWords.word1"
+                value={formData.styleWords.word1}
+                onChange={handleInputChange}
                 className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 placeholder="First word"
-                {...register("styleWords.word1", { required: true })}
               />
             </div>
             <div className="flex items-center">
@@ -366,9 +666,11 @@ export default function SurveyForm() {
               </div>
               <input
                 type="text"
+                name="styleWords.word2"
+                value={formData.styleWords.word2}
+                onChange={handleInputChange}
                 className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 placeholder="Second word"
-                {...register("styleWords.word2", { required: true })}
               />
             </div>
             <div className="flex items-center">
@@ -377,15 +679,15 @@ export default function SurveyForm() {
               </div>
               <input
                 type="text"
+                name="styleWords.word3"
+                value={formData.styleWords.word3}
+                onChange={handleInputChange}
                 className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 placeholder="Third word"
-                {...register("styleWords.word3", { required: true })}
               />
             </div>
           </div>
-          {(errors.styleWords?.word1 ||
-            errors.styleWords?.word2 ||
-            errors.styleWords?.word3) && (
+          {errors.styleWords && (
             <span className="text-red-500 text-xs mt-2 block text-center">
               All three words are required
             </span>
@@ -417,9 +719,11 @@ export default function SurveyForm() {
                 <input
                   type="checkbox"
                   id={`fabric-${fabric}`}
+                  name="fabricPreferences"
                   value={fabric}
+                  checked={formData.fabricPreferences.includes(fabric)}
+                  onChange={handleCheckboxChange}
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("fabricPreferences")}
                 />
                 <label
                   htmlFor={`fabric-${fabric}`}
@@ -448,9 +752,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id="comfort"
+                  name="comfortVsStructure"
                   value="Comfort"
+                  checked={formData.comfortVsStructure === "Comfort"}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("comfortVsStructure", { required: true })}
                 />
                 <div className="flex-1 h-2 bg-gray-200 rounded relative">
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -460,9 +766,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id="structure"
+                  name="comfortVsStructure"
                   value="Structure"
+                  checked={formData.comfortVsStructure === "Structure"}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("comfortVsStructure", { required: true })}
                 />
               </div>
             </div>
@@ -476,9 +784,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id="simple"
+                  name="simpleVsLayered"
                   value="Simple"
+                  checked={formData.simpleVsLayered === "Simple"}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("simpleVsLayered", { required: true })}
                 />
                 <div className="flex-1 h-2 bg-gray-200 rounded relative">
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -488,9 +798,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id="layered"
+                  name="simpleVsLayered"
                   value="Layered"
+                  checked={formData.simpleVsLayered === "Layered"}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("simpleVsLayered", { required: true })}
                 />
               </div>
             </div>
@@ -504,9 +816,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id="neutrals"
+                  name="neutralsVsColor"
                   value="Neutrals"
+                  checked={formData.neutralsVsColor === "Neutrals"}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("neutralsVsColor", { required: true })}
                 />
                 <div className="flex-1 h-2 bg-gray-200 rounded relative">
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -516,9 +830,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id="color"
+                  name="neutralsVsColor"
                   value="Color"
+                  checked={formData.neutralsVsColor === "Color"}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("neutralsVsColor", { required: true })}
                 />
               </div>
             </div>
@@ -552,9 +868,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id={`outfit-${option}`}
+                  name="outfitBuilding"
                   value={option}
+                  checked={formData.outfitBuilding === option}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("outfitBuilding", { required: true })}
                 />
                 <label
                   htmlFor={`outfit-${option}`}
@@ -568,9 +886,11 @@ export default function SurveyForm() {
               <input
                 type="radio"
                 id="outfit-other"
+                name="outfitBuilding"
                 value="Other"
+                checked={formData.outfitBuilding === "Other"}
+                onChange={handleInputChange}
                 className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                {...register("outfitBuilding")}
               />
               <label htmlFor="outfit-other" className="text-sm text-gray-700">
                 Other
@@ -579,15 +899,17 @@ export default function SurveyForm() {
             <div className="pl-6">
               <input
                 type="text"
+                name="outfitBuildingOther"
+                value={formData.outfitBuildingOther}
+                onChange={handleInputChange}
                 placeholder="Please specify"
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 mt-1"
-                {...register("outfitBuildingOther")}
               />
             </div>
           </div>
           {errors.outfitBuilding && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.outfitBuilding}
             </span>
           )}
         </div>
@@ -598,14 +920,16 @@ export default function SurveyForm() {
             How has your style changed over the years? What's stayed the same?
           </label>
           <textarea
+            name="styleEvolution"
+            value={formData.styleEvolution}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Describe your style journey..."
-            {...register("styleEvolution", { required: true })}
           ></textarea>
           {errors.styleEvolution && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.styleEvolution}
             </span>
           )}
         </div>
@@ -621,9 +945,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id="blend"
+                  name="blendVsStandout"
                   value="Blend in"
+                  checked={formData.blendVsStandout === "Blend in"}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("blendVsStandout", { required: true })}
                 />
                 <label htmlFor="blend" className="text-gray-700 font-medium">
                   Blend in
@@ -638,9 +964,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id="standout"
+                  name="blendVsStandout"
                   value="Stand out"
+                  checked={formData.blendVsStandout === "Stand out"}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("blendVsStandout", { required: true })}
                 />
                 <label htmlFor="standout" className="text-gray-700 font-medium">
                   Stand out
@@ -653,7 +981,7 @@ export default function SurveyForm() {
           </div>
           {errors.blendVsStandout && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.blendVsStandout}
             </span>
           )}
         </div>
@@ -669,9 +997,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id="express"
+                  name="expressVsShift"
                   value="Express"
+                  checked={formData.expressVsShift === "Express"}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("expressVsShift", { required: true })}
                 />
                 <label htmlFor="express" className="text-gray-700 font-medium">
                   Express
@@ -686,9 +1016,11 @@ export default function SurveyForm() {
                 <input
                   type="radio"
                   id="shift"
+                  name="expressVsShift"
                   value="Shift"
+                  checked={formData.expressVsShift === "Shift"}
+                  onChange={handleInputChange}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("expressVsShift", { required: true })}
                 />
                 <label htmlFor="shift" className="text-gray-700 font-medium">
                   Shift
@@ -701,7 +1033,7 @@ export default function SurveyForm() {
           </div>
           {errors.expressVsShift && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.expressVsShift}
             </span>
           )}
         </div>
@@ -712,14 +1044,16 @@ export default function SurveyForm() {
             What kind of feedback do you get on your style from others?
           </label>
           <textarea
+            name="styleFeedback"
+            value={formData.styleFeedback}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Share the compliments or comments you often receive..."
-            {...register("styleFeedback", { required: true })}
           ></textarea>
           {errors.styleFeedback && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.styleFeedback}
             </span>
           )}
         </div>
@@ -730,14 +1064,16 @@ export default function SurveyForm() {
             What makes you feel powerful in your clothing?
           </label>
           <textarea
+            name="feelingPowerful"
+            value={formData.feelingPowerful}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Describe what elements give you confidence..."
-            {...register("feelingPowerful", { required: true })}
           ></textarea>
           {errors.feelingPowerful && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.feelingPowerful}
             </span>
           )}
         </div>
@@ -748,14 +1084,16 @@ export default function SurveyForm() {
             What do you avoid wearing—no matter how trendy or flattering?
           </label>
           <textarea
+            name="styleAvoidance"
+            value={formData.styleAvoidance}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Share your fashion boundaries..."
-            {...register("styleAvoidance", { required: true })}
           ></textarea>
           {errors.styleAvoidance && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.styleAvoidance}
             </span>
           )}
         </div>
@@ -767,14 +1105,16 @@ export default function SurveyForm() {
             Describe.
           </label>
           <textarea
+            name="styleRuts"
+            value={formData.styleRuts}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Tell us about your style challenges..."
-            {...register("styleRuts", { required: true })}
           ></textarea>
           {errors.styleRuts && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.styleRuts}
             </span>
           )}
         </div>
@@ -785,14 +1125,16 @@ export default function SurveyForm() {
             If your wardrobe told a story, what would it be about?
           </label>
           <textarea
+            name="wardrobeStory"
+            value={formData.wardrobeStory}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Get creative with your wardrobe narrative..."
-            {...register("wardrobeStory", { required: true })}
           ></textarea>
           {errors.wardrobeStory && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.wardrobeStory}
             </span>
           )}
         </div>
@@ -817,9 +1159,11 @@ export default function SurveyForm() {
                 <input
                   type="checkbox"
                   id={`palette-${palette}`}
+                  name="colorPalettes"
                   value={palette}
+                  checked={formData.colorPalettes.includes(palette)}
+                  onChange={handleCheckboxChange}
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  {...register("colorPalettes")}
                 />
                 <label
                   htmlFor={`palette-${palette}`}
@@ -838,14 +1182,16 @@ export default function SurveyForm() {
             Are there any textures or materials you dislike wearing? Why?
           </label>
           <textarea
+            name="fabricDislikes"
+            value={formData.fabricDislikes}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Explain what fabrics you avoid and why..."
-            {...register("fabricDislikes", { required: true })}
           ></textarea>
           {errors.fabricDislikes && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.fabricDislikes}
             </span>
           )}
         </div>
@@ -865,11 +1211,10 @@ export default function SurveyForm() {
                 type="range"
                 min="1"
                 max="10"
+                name="fabricImportance"
+                value={formData.fabricImportance}
+                onChange={handleRangeChange}
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                {...register("fabricImportance", {
-                  required: true,
-                  valueAsNumber: true,
-                })}
               />
               <div className="flex justify-between w-full px-1 text-xs text-gray-500 mt-2">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
@@ -882,7 +1227,7 @@ export default function SurveyForm() {
           </div>
           {errors.fabricImportance && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.fabricImportance}
             </span>
           )}
         </div>
@@ -893,14 +1238,16 @@ export default function SurveyForm() {
             What do you wish your style communicated about you?
           </label>
           <textarea
+            name="styleCommunication"
+            value={formData.styleCommunication}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Share the message you want your style to convey..."
-            {...register("styleCommunication", { required: true })}
           ></textarea>
           {errors.styleCommunication && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.styleCommunication}
             </span>
           )}
         </div>
@@ -912,14 +1259,16 @@ export default function SurveyForm() {
             your wardrobe?
           </label>
           <textarea
+            name="becomingPerson"
+            value={formData.becomingPerson}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Reflect on your personal growth and style evolution..."
-            {...register("becomingPerson", { required: true })}
           ></textarea>
           {errors.becomingPerson && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.becomingPerson}
             </span>
           )}
         </div>
@@ -931,14 +1280,16 @@ export default function SurveyForm() {
             through fashion?
           </label>
           <textarea
+            name="pastStyle"
+            value={formData.pastStyle}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Describe a past style era you might want to revisit..."
-            {...register("pastStyle", { required: true })}
           ></textarea>
           {errors.pastStyle && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.pastStyle}
             </span>
           )}
         </div>
@@ -949,14 +1300,16 @@ export default function SurveyForm() {
             Describe your dream wardrobe. No limits.
           </label>
           <textarea
+            name="dreamWardrobe"
+            value={formData.dreamWardrobe}
+            onChange={handleInputChange}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             rows={3}
             placeholder="Let your imagination run wild—what would your ideal wardrobe include?"
-            {...register("dreamWardrobe", { required: true })}
           ></textarea>
           {errors.dreamWardrobe && (
             <span className="text-red-500 text-xs mt-2 block text-center">
-              This field is required
+              {errors.dreamWardrobe}
             </span>
           )}
         </div>

@@ -39,7 +39,7 @@ ${formatData(data)}
     // Send email
     await resend.emails.send({
       from: "Survey <survey@bullish.design>",
-      to: "cosmicfits@bullish.design",
+      to: "maria@bullish.design",
       subject: "New Cosmic Fits Survey Submission",
       html: emailHtml,
     });
