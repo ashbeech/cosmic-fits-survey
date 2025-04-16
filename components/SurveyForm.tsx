@@ -398,9 +398,9 @@ export default function SurveyForm() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-12 md:space-y-16">
+        <form onSubmit={handleSubmit} className="p-6 space-y-24 md:space-y-32">
           {/* Question 1: Birthdate */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Full Birthdate (If time is unknown, put 00:00am)
             </label>
@@ -443,7 +443,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 2: Birthplace */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Place of Birth (City, Country)
             </label>
@@ -463,7 +463,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 3: Music Genres */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               What music genres meant the most to you between ages 10–20?
               (Choose up to 3)
@@ -510,7 +510,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 4: Artists */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Which artists or bands shaped your identity as a teen? (add up to
               5)
@@ -531,7 +531,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 5: Movies/Shows */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               What kind of movies or shows were you drawn to growing up? (Add up
               to 5)
@@ -552,7 +552,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 6: Subcultures */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Were you part of any subcultures or style scenes as a teen?
               Describe.
@@ -573,7 +573,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 7: Fashion Attitude */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               How did you feel about mainstream fashion growing up?
             </label>
@@ -641,7 +641,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 8: Style Icons */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Who were your early style icons (real, fictional, celebrity,
               friend)?
@@ -662,7 +662,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 9: Style Words */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Describe your current style in 3 words.
             </label>
@@ -715,7 +715,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 10: Fabric Preferences */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               What types of fabrics or textures do you love wearing?
             </label>
@@ -757,7 +757,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 11: Preferences */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Which do you prefer?
             </label>
@@ -870,7 +870,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 12: Outfit Building */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               How do you usually build an outfit?
             </label>
@@ -935,7 +935,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 13: Style Evolution */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               How has your style changed over the years? What's stayed the same?
             </label>
@@ -955,7 +955,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 14: Blend vs Standout */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Do you feel more like yourself when you blend in or stand out?
             </label>
@@ -1011,7 +1011,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 15: Express vs Shift */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Do you dress to express how you feel, or to shift how you feel?
             </label>
@@ -1066,7 +1066,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 16: Style Feedback */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               What kind of feedback do you get on your style from others?
             </label>
@@ -1086,7 +1086,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 17: Feeling Powerful */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               What makes you feel powerful in your clothing?
             </label>
@@ -1106,7 +1106,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 18: Style Avoidance */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               What do you avoid wearing—no matter how trendy or flattering?
             </label>
@@ -1126,7 +1126,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 19: Style Ruts */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Do you go through style "ruts" or phases where nothing feels
               right? Describe.
@@ -1147,7 +1147,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 20: Wardrobe Story */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               If your wardrobe told a story, what would it be about?
             </label>
@@ -1167,7 +1167,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 21: Color Palettes */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               What color palettes feel most natural to you?
             </label>
@@ -1204,7 +1204,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 22: Fabric Dislikes */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Are there any textures or materials you dislike wearing? Why?
             </label>
@@ -1224,7 +1224,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 23: Fabric Importance */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               On a scale of 1–10, how important is the feel of fabric to you?
             </label>
@@ -1260,7 +1260,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 24: Style Communication */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               What do you wish your style communicated about you?
             </label>
@@ -1280,7 +1280,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 25: Becoming Person */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               What kind of person are you becoming—and how does that influence
               your wardrobe?
@@ -1301,7 +1301,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 26: Past Style */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Is there a version of you from the past you'd like to channel
               again through fashion?
@@ -1322,7 +1322,7 @@ export default function SurveyForm() {
           </div>
 
           {/* Question 27: Dream Wardrobe */}
-          <div className="p-6 bg-gray-50 rounded-md shadow-sm">
+          <div className="p-8 bg-gray-50 rounded-md shadow-sm">
             <label className="block text-gray-700 text-lg font-medium mb-4 required text-center">
               Describe your dream wardrobe. No limits.
             </label>
