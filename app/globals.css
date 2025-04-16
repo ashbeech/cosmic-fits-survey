@@ -98,7 +98,7 @@ h6 {
   margin-bottom: 1rem;
   color: rgb(var(--foreground-rgb));
   display: block;
-  text-align: center;
+  text-align: left;
 }
 
 .required::after {
@@ -405,4 +405,135 @@ input[type="radio"] {
   font-size: 0.875rem;
   color: #718096;
   margin-top: 0.5rem;
+}
+
+/* Basic reset for form elements */
+input[type="radio"],
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* Radio button styling to match the image */
+input[type="radio"] {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #d1d5db;
+  border-radius: 50%;
+  background-color: white;
+  position: relative;
+}
+
+/* Checked state for radio buttons */
+input[type="radio"]:checked::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4a5568;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 0;
+  background-color: white;
+  position: relative;
+}
+
+/* Checked state for checkboxes */
+input[type="checkbox"]:checked::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid #4a5568;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Hover states */
+input[type="radio"]:hover,
+input[type="checkbox"]:hover {
+  border-color: #9ca3af;
+}
+
+/* Focus states - minimal to match design */
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+  outline: none;
+}
+
+/* Label styling */
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+  margin-left: 12px;
+  font-size: 16px;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+/* Disabled states */
+input[type="radio"]:disabled,
+input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Remove default focus rings from Tailwind */
+.focus\:ring-0:focus {
+  --tw-ring-offset-width: 0px;
+  --tw-ring-shadow: 0 0 #0000;
+}
+
+.focus\:ring-offset-0:focus {
+  --tw-ring-offset-width: 0px;
+}
+
+/* Question spacing */
+.question-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+
+/* Option containers for consistent spacing */
+.radio-option,
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+/* Preference matrix custom styles */
+.preference-radio {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #d1d5db;
+  border-radius: 50%;
+  background-color: white;
+  position: relative;
+}
+
+.preference-radio:checked::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4a5568;
 }

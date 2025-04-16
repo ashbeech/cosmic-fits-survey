@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 type FormData = {
+  name: string;
   birthdate: string;
   birthtime: string;
   birthplace: string;
@@ -42,6 +43,7 @@ type FormData = {
 };
 
 type ErrorState = {
+  name: string;
   birthdate?: string;
   birthtime?: string;
   birthplace?: string;
@@ -79,8 +81,9 @@ type ErrorState = {
 export default function SurveyForm() {
   // Initial form state
   const [formData, setFormData] = useState<FormData>({
+    name: "",
     birthdate: "",
-    birthtime: "",
+    birthtime: "00:00",
     birthplace: "",
     musicGenres: [],
     artists: "",
@@ -200,35 +203,39 @@ export default function SurveyForm() {
 
     // Required fields
     if (!formData.birthdate) {
-      newErrors.birthdate = "This field is required";
+      newErrors.name = "You can enter anything you like";
+    }
+
+    if (!formData.birthdate) {
+      newErrors.birthdate = "Your date of birth is key to your cosmic fit";
     }
 
     if (!formData.birthtime) {
-      newErrors.birthtime = "This field is required";
+      newErrors.birthtime = "Your birth time is key to your cosmic fit";
     }
 
     if (!formData.birthplace) {
-      newErrors.birthplace = "This field is required";
+      newErrors.birthplace = "Your birth place is key to your cosmic fit";
     }
 
     if (!formData.artists) {
-      newErrors.artists = "This field is required";
+      newErrors.artists = "Artists are key to your cosmic fit";
     }
 
     if (!formData.moviesShows) {
-      newErrors.moviesShows = "This field is required";
+      newErrors.moviesShows = "Movies and shows are key to your cosmic fit";
     }
 
     if (!formData.subcultures) {
-      newErrors.subcultures = "This field is required";
+      newErrors.subcultures = "Subcultures are key to your cosmic fit";
     }
 
     if (!formData.fashionAttitude) {
-      newErrors.fashionAttitude = "This field is required";
+      newErrors.fashionAttitude = "Fashion attitude is key to your cosmic fit";
     }
 
     if (!formData.styleIcons) {
-      newErrors.styleIcons = "This field is required";
+      newErrors.styleIcons = "Style icons are key to your cosmic fit";
     }
 
     // Style words validation
@@ -236,15 +243,15 @@ export default function SurveyForm() {
       {};
 
     if (!formData.styleWords.word1) {
-      styleWordsErrors.word1 = "Required";
+      styleWordsErrors.word1 = "Please think of a word";
     }
 
     if (!formData.styleWords.word2) {
-      styleWordsErrors.word2 = "Required";
+      styleWordsErrors.word2 = "Please think of a word";
     }
 
     if (!formData.styleWords.word3) {
-      styleWordsErrors.word3 = "Required";
+      styleWordsErrors.word3 = "Please think of a word";
     }
 
     if (Object.keys(styleWordsErrors).length > 0) {
@@ -265,59 +272,60 @@ export default function SurveyForm() {
     }
 
     if (!formData.outfitBuilding) {
-      newErrors.outfitBuilding = "This field is required";
+      newErrors.outfitBuilding = "Outfit building is key to your cosmic fit";
     }
 
     if (!formData.styleEvolution) {
-      newErrors.styleEvolution = "This field is required";
+      newErrors.styleEvolution = "Style evolution is key to your cosmic fit";
     }
 
     if (!formData.blendVsStandout) {
-      newErrors.blendVsStandout = "This field is required";
+      newErrors.blendVsStandout = "This is key to your cosmic fit";
     }
 
     if (!formData.expressVsShift) {
-      newErrors.expressVsShift = "This field is required";
+      newErrors.expressVsShift = "This is key to your cosmic fit";
     }
 
     if (!formData.styleFeedback) {
-      newErrors.styleFeedback = "This field is required";
+      newErrors.styleFeedback = "This is key to your cosmic fit";
     }
 
     if (!formData.feelingPowerful) {
-      newErrors.feelingPowerful = "This field is required";
+      newErrors.feelingPowerful = "This is key to your cosmic fit";
     }
 
     if (!formData.styleAvoidance) {
-      newErrors.styleAvoidance = "This field is required";
+      newErrors.styleAvoidance = "This is key to your cosmic fit";
     }
 
     if (!formData.styleRuts) {
-      newErrors.styleRuts = "This field is required";
+      newErrors.styleRuts = "This is key to your cosmic fit";
     }
 
     if (!formData.wardrobeStory) {
-      newErrors.wardrobeStory = "This field is required";
+      newErrors.wardrobeStory = "Your wardrobe story is key to your cosmic fit";
     }
 
     if (!formData.fabricDislikes) {
-      newErrors.fabricDislikes = "This field is required";
+      newErrors.fabricDislikes =
+        "Your fabric dislikes are key to your cosmic fit";
     }
 
     if (!formData.styleCommunication) {
-      newErrors.styleCommunication = "This field is required";
+      newErrors.styleCommunication = "This is key to your cosmic fit";
     }
 
     if (!formData.becomingPerson) {
-      newErrors.becomingPerson = "This field is required";
+      newErrors.becomingPerson = "This is key to your cosmic fit";
     }
 
     if (!formData.pastStyle) {
-      newErrors.pastStyle = "This field is required";
+      newErrors.pastStyle = "Your past style is key to your cosmic fit";
     }
 
     if (!formData.dreamWardrobe) {
-      newErrors.dreamWardrobe = "This field is required";
+      newErrors.dreamWardrobe = "Your dream wardrobe is key to your cosmic fit";
     }
 
     setErrors(newErrors);
@@ -387,9 +395,6 @@ export default function SurveyForm() {
         <div className="survey-form">
           <div className="survey-header">
             <h1>✨Cosmic Fits Survey✨</h1>
-            <p className="survey-subtitle">
-              All fields marked with * are required
-            </p>
           </div>
 
           {error && (
@@ -400,47 +405,69 @@ export default function SurveyForm() {
           )}
 
           <form onSubmit={handleSubmit}>
+            {/* Question 0: Name */}
+            <div className="question-section">
+              <label className="question-label required">Your Name 👋</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
+                placeholder="e.g. Maria"
+              />
+              {errors.name && (
+                <span className="text-red-500 text-xs mt-2 block text-center">
+                  {errors.name}
+                </span>
+              )}
+            </div>
+
             {/* Question 1: Birthdate */}
             <div className="question-section">
               <label className="question-label required">
                 Full Birthdate (If time is unknown, put 00:00am)
               </label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-500 mb-2 text-center">
-                    Date
-                  </label>
-                  <input
-                    type="date"
-                    name="birthdate"
-                    value={formData.birthdate}
-                    onChange={handleInputChange}
-                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                  />
-                  {errors.birthdate && (
-                    <span className="text-red-500 text-xs mt-2 block text-center">
-                      {errors.birthdate}
-                    </span>
-                  )}
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-500 mb-2 text-center">
-                    Time
-                  </label>
-                  <input
-                    type="time"
-                    name="birthtime"
-                    value={formData.birthtime}
-                    onChange={handleInputChange}
-                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                  />
-                  {errors.birthtime && (
-                    <span className="text-red-500 text-xs mt-2 block text-center">
-                      {errors.birthtime}
-                    </span>
-                  )}
-                </div>
-              </div>
+              <table className="w-full">
+                <tbody>
+                  <tr>
+                    <td className="w-1/2 pr-3">
+                      <label className="block text-sm font-medium text-gray-500 mb-2">
+                        Date
+                      </label>
+                      <input
+                        type="date"
+                        name="birthdate"
+                        value={formData.birthdate}
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
+                      />
+                      {errors.birthdate && (
+                        <span className="text-red-500 text-xs mt-2 block">
+                          {errors.birthdate}
+                        </span>
+                      )}
+                    </td>
+                    <td className="w-1/2 pl-3">
+                      <label className="block text-sm font-medium text-gray-500 mb-2">
+                        Time
+                      </label>
+                      <input
+                        type="time"
+                        name="birthtime"
+                        value={formData.birthtime}
+                        onChange={handleInputChange}
+                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
+                      />
+                      {errors.birthtime && (
+                        <span className="text-red-500 text-xs mt-2 block">
+                          {errors.birthtime}
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             {/* Question 2: Birthplace */}
@@ -453,8 +480,8 @@ export default function SurveyForm() {
                 name="birthplace"
                 value={formData.birthplace}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                placeholder="e.g., New York, USA"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
+                placeholder="e.g. New York, USA"
               />
               {errors.birthplace && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
@@ -492,7 +519,11 @@ export default function SurveyForm() {
                       value={genre}
                       checked={formData.musicGenres.includes(genre)}
                       onChange={handleCheckboxChange}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="form-checkbox h-4 w-4"
+                      disabled={
+                        !formData.musicGenres.includes(genre) &&
+                        formData.musicGenres.length >= 3
+                      }
                     />
                     <label
                       htmlFor={`genre-${genre}`}
@@ -520,9 +551,9 @@ export default function SurveyForm() {
                 name="artists"
                 value={formData.artists}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
-                placeholder="e.g., Radiohead, Beyoncé, Taylor Swift..."
+                placeholder="e.g. Radiohead, Beyoncé, Taylor Swift..."
               ></textarea>
               {errors.artists && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
@@ -541,9 +572,9 @@ export default function SurveyForm() {
                 name="moviesShows"
                 value={formData.moviesShows}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
-                placeholder="e.g., Science fiction, romantic comedies, anime..."
+                placeholder="e.g. Science fiction, romantic comedies, anime..."
               ></textarea>
               {errors.moviesShows && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
@@ -562,9 +593,9 @@ export default function SurveyForm() {
                 name="subcultures"
                 value={formData.subcultures}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
-                placeholder="e.g., Punk, skater, goth, preppy..."
+                placeholder="e.g. Punk, skater, goth, preppy..."
               ></textarea>
               {errors.subcultures && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
@@ -596,7 +627,7 @@ export default function SurveyForm() {
                       value={option}
                       checked={formData.fashionAttitude === option}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="form-radio h-4 w-4"
                     />
                     <label
                       htmlFor={`fashion-${option}`}
@@ -614,7 +645,7 @@ export default function SurveyForm() {
                     value="Other"
                     checked={formData.fashionAttitude === "Other"}
                     onChange={handleInputChange}
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="form-radio h-4 w-4"
                   />
                   <label
                     htmlFor="fashion-other"
@@ -630,7 +661,7 @@ export default function SurveyForm() {
                     value={formData.fashionAttitudeOther}
                     onChange={handleInputChange}
                     placeholder="Please specify"
-                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 mt-1"
+                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0 mt-1"
                   />
                 </div>
               </div>
@@ -651,9 +682,9 @@ export default function SurveyForm() {
                 name="styleIcons"
                 value={formData.styleIcons}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
-                placeholder="e.g., Princess Diana, David Bowie, Rihanna..."
+                placeholder="e.g. Princess Diana, David Bowie, Rihanna..."
               ></textarea>
               {errors.styleIcons && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
@@ -674,7 +705,7 @@ export default function SurveyForm() {
                     name="styleWords.word1"
                     value={formData.styleWords.word1}
                     onChange={handleInputChange}
-                    className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                     placeholder="First word"
                   />
                 </div>
@@ -684,7 +715,7 @@ export default function SurveyForm() {
                     name="styleWords.word2"
                     value={formData.styleWords.word2}
                     onChange={handleInputChange}
-                    className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                     placeholder="Second word"
                   />
                 </div>
@@ -694,7 +725,7 @@ export default function SurveyForm() {
                     name="styleWords.word3"
                     value={formData.styleWords.word3}
                     onChange={handleInputChange}
-                    className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                     placeholder="Third word"
                   />
                 </div>
@@ -735,7 +766,7 @@ export default function SurveyForm() {
                       value={fabric}
                       checked={formData.fabricPreferences.includes(fabric)}
                       onChange={handleCheckboxChange}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="form-checkbox h-4 w-4"
                     />
                     <label
                       htmlFor={`fabric-${fabric}`}
@@ -878,7 +909,7 @@ export default function SurveyForm() {
                       value={option}
                       checked={formData.outfitBuilding === option}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="form-radio h-4 w-4"
                     />
                     <label
                       htmlFor={`outfit-${option}`}
@@ -896,7 +927,7 @@ export default function SurveyForm() {
                     value="Other"
                     checked={formData.outfitBuilding === "Other"}
                     onChange={handleInputChange}
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="form-radio h-4 w-4"
                   />
                   <label
                     htmlFor="outfit-other"
@@ -912,7 +943,7 @@ export default function SurveyForm() {
                     value={formData.outfitBuildingOther}
                     onChange={handleInputChange}
                     placeholder="Please specify"
-                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 mt-1"
+                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0 mt-1"
                   />
                 </div>
               </div>
@@ -933,7 +964,7 @@ export default function SurveyForm() {
                 name="styleEvolution"
                 value={formData.styleEvolution}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Describe your style journey..."
               ></textarea>
@@ -959,7 +990,7 @@ export default function SurveyForm() {
                       value="Blend in"
                       checked={formData.blendVsStandout === "Blend in"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="form-radio h-4 w-4"
                     />
                     <label
                       htmlFor="blend"
@@ -982,7 +1013,7 @@ export default function SurveyForm() {
                       value="Stand out"
                       checked={formData.blendVsStandout === "Stand out"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="form-radio h-4 w-4"
                     />
                     <label
                       htmlFor="standout"
@@ -1018,7 +1049,7 @@ export default function SurveyForm() {
                       value="Express"
                       checked={formData.expressVsShift === "Express"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="form-radio h-4 w-4"
                     />
                     <label
                       htmlFor="express"
@@ -1040,7 +1071,7 @@ export default function SurveyForm() {
                       value="Shift"
                       checked={formData.expressVsShift === "Shift"}
                       onChange={handleInputChange}
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="form-radio h-4 w-4"
                     />
                     <label
                       htmlFor="shift"
@@ -1070,7 +1101,7 @@ export default function SurveyForm() {
                 name="styleFeedback"
                 value={formData.styleFeedback}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Share the compliments or comments you often receive..."
               ></textarea>
@@ -1090,7 +1121,7 @@ export default function SurveyForm() {
                 name="feelingPowerful"
                 value={formData.feelingPowerful}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Describe what elements give you confidence..."
               ></textarea>
@@ -1110,7 +1141,7 @@ export default function SurveyForm() {
                 name="styleAvoidance"
                 value={formData.styleAvoidance}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Share your fashion boundaries..."
               ></textarea>
@@ -1131,7 +1162,7 @@ export default function SurveyForm() {
                 name="styleRuts"
                 value={formData.styleRuts}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Tell us about your style challenges..."
               ></textarea>
@@ -1151,7 +1182,7 @@ export default function SurveyForm() {
                 name="wardrobeStory"
                 value={formData.wardrobeStory}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Get creative with your wardrobe narrative..."
               ></textarea>
@@ -1186,7 +1217,7 @@ export default function SurveyForm() {
                       value={palette}
                       checked={formData.colorPalettes.includes(palette)}
                       onChange={handleCheckboxChange}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="form-checkbox h-4 w-4"
                     />
                     <label
                       htmlFor={`palette-${palette}`}
@@ -1208,7 +1239,7 @@ export default function SurveyForm() {
                 name="fabricDislikes"
                 value={formData.fabricDislikes}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Explain what fabrics you avoid and why..."
               ></textarea>
@@ -1257,7 +1288,7 @@ export default function SurveyForm() {
                 name="styleCommunication"
                 value={formData.styleCommunication}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Share the message you want your style to convey..."
               ></textarea>
@@ -1278,7 +1309,7 @@ export default function SurveyForm() {
                 name="becomingPerson"
                 value={formData.becomingPerson}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Reflect on your personal growth and style evolution..."
               ></textarea>
@@ -1299,7 +1330,7 @@ export default function SurveyForm() {
                 name="pastStyle"
                 value={formData.pastStyle}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Describe a past style era you might want to revisit..."
               ></textarea>
@@ -1319,7 +1350,7 @@ export default function SurveyForm() {
                 name="dreamWardrobe"
                 value={formData.dreamWardrobe}
                 onChange={handleInputChange}
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
                 placeholder="Let your imagination run wild—what would your ideal wardrobe include?"
               ></textarea>
