@@ -386,7 +386,7 @@ export default function SurveyForm() {
       <div className="survey-container">
         <div className="survey-form">
           <div className="survey-header">
-            <h2>Your Cosmic Style Journey</h2>
+            <h1>✨Cosmic Fits Survey✨</h1>
             <p className="survey-subtitle">
               All fields marked with * are required
             </p>
@@ -669,9 +669,6 @@ export default function SurveyForm() {
               </label>
               <div className="space-y-4 max-w-md mx-auto">
                 <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-medium mr-3">
-                    1
-                  </div>
                   <input
                     type="text"
                     name="styleWords.word1"
@@ -682,9 +679,6 @@ export default function SurveyForm() {
                   />
                 </div>
                 <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-medium mr-3">
-                    2
-                  </div>
                   <input
                     type="text"
                     name="styleWords.word2"
@@ -695,9 +689,6 @@ export default function SurveyForm() {
                   />
                 </div>
                 <div className="flex items-center">
-                  <div className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-medium mr-3">
-                    3
-                  </div>
                   <input
                     type="text"
                     name="styleWords.word3"
@@ -1352,7 +1343,7 @@ export default function SurveyForm() {
               )}
             </div>
 
-            <div className="p-6">
+            <div className="p-8">
               <div className="bg-indigo-50 rounded-md p-6 mb-8 border border-indigo-100 text-center">
                 <p className="text-sm text-indigo-700">
                   Thank you for taking the time to complete this survey. Your

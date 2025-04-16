@@ -7,10 +7,14 @@
   --foreground-rgb: 45, 55, 72;
   --background-start-rgb: 248, 250, 252;
   --background-end-rgb: 255, 255, 255;
-  --accent-color: 56, 124, 43;
+  --accent-color: 0, 0, 139;
   --accent-color-dark: 40, 100, 30;
   --accent-light: 232, 245, 233;
   --form-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -37,14 +41,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: rgb(var(--accent-color));
   font-weight: 600;
-}
-
-.content {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 1rem;
 }
 
 .survey-container {
@@ -124,6 +121,7 @@ select {
   background-color: white;
   transition: all 0.2s;
   font-size: 1rem;
+  box-sizing: border-box; /* Ensures padding is included in width */
 }
 
 input[type="text"]:focus,
