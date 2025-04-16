@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cosmic Fits Survey
 
-## Getting Started
+A Next.js application that replicates the Cosmic Fits survey form and forwards responses to an email address using Resend.
 
-First, run the development server:
+## Features
+
+- Responsive survey form with 27 questions
+- Form validation
+- Email notifications for survey submissions
+- Deployed on Vercel
+
+## Prerequisites
+
+- Node.js 18.x or later
+- npm or yarn
+- A Resend account (https://resend.io)
+- A Vercel account (https://vercel.com)
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/cosmic-fits-survey.git
+cd cosmic-fits-survey
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up environment variables:
+
+Copy the example environment file and update it with your Resend API key:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Edit `.env.local` and add your Resend API key:
+
+```
+RESEND_API_KEY=re_yourapikey
+```
+
+## Setting Up Resend
+
+1. Create an account on [Resend](https://resend.io)
+2. Add and verify your domain (bullish.design)
+3. Create an API key from the dashboard
+4. Set up the sender email address in the Resend dashboard (survey@bullish.design)
+5. Make sure to add the destination email (cosmicfits@bullish.design) to your verified recipients if you're on the free plan
+
+## Local Development
+
+Run the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment to Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Push your code to a GitHub repository.
+2. Log in to your Vercel account.
+3. Create a new project and import your GitHub repository.
+4. Configure environment variables in the Vercel project settings:
+   - Add `RESEND_API_KEY` with your Resend API key
+5. Deploy the project.
 
-## Learn More
+### Manual Deployment
 
-To learn more about Next.js, take a look at the following resources:
+If you prefer to deploy from the command line:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Install the Vercel CLI:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm install -g vercel
+```
 
-## Deploy on Vercel
+2. Run the deployment command:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+vercel
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Follow the prompts to link to your Vercel account and project.
+
+4. For production deployment:
+
+```bash
+vercel --prod
+```
+
+## Project Structure
+
+- `app/` - Next.js app directory (page structure, layout, API routes)
+- `components/` - React components
+- `public/` - Static assets
+
+## Customization
+
+- To modify the survey questions, edit the `components/SurveyForm.tsx` file
+- To change the email template, edit the `app/api/submit-survey/route.ts` file
+- To update styling, modify the Tailwind classes or edit `app/globals.css`
+
+## License
+
+This project is licensed under the MIT License.
