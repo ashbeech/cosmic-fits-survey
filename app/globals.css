@@ -83,6 +83,13 @@ select:focus {
   transition-duration: 150ms;
 }
 
+/* Container centering */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Responsive text sizing */
 @media (max-width: 640px) {
   h1 {
@@ -93,6 +100,19 @@ select:focus {
   .text-lg {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  /* Make form elements larger on mobile for better touch targets */
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+
+  /* Ensure proper padding on mobile */
+  .p-6 {
+    padding: 1.25rem;
   }
 }
 
@@ -106,4 +126,26 @@ select:focus {
 /* Form section hover effect */
 .bg-gray-50:hover {
   background-color: #f8fafc;
+}
+
+/* Center all text by default in form elements */
+.text-center {
+  text-align: center;
+}
+
+/* Ensure inputs expand properly */
+.w-full {
+  width: 100%;
+}
+
+/* Force max width for better readability */
+.max-w-3xl {
+  max-width: 48rem;
+}
+
+/* Add shadow to make form pop off background */
+.shadow-lg {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
