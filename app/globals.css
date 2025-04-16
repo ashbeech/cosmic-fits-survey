@@ -16,11 +16,18 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    sans-serif;
 }
 
 .required::after {
-  content: '*';
+  content: "*";
   color: rgb(239 68 68);
   margin-left: 2px;
 }
@@ -55,16 +62,17 @@ input[type="range"]::-moz-range-thumb {
 }
 
 /* Checkbox and radio button styling */
-input[type="checkbox"], input[type="radio"] {
+input[type="checkbox"],
+input[type="radio"] {
   cursor: pointer;
 }
 
 /* Focus styling */
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
-  ring: 2px;
-  ring-offset: 2px;
-  ring-indigo-500;
+  @apply ring-2 ring-offset-2 ring-indigo-500;
 }
 
 /* Hover effects for form elements */
@@ -81,7 +89,7 @@ input:focus, textarea:focus, select:focus {
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
-  
+
   .text-lg {
     font-size: 1rem;
     line-height: 1.5rem;
