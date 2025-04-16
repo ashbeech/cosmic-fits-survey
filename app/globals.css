@@ -41,6 +41,12 @@ h6 {
   font-weight: 600;
 }
 
+.content {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
 .survey-container {
   width: 100%;
   max-width: 800px;
