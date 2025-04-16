@@ -136,13 +136,28 @@ export default function SurveyForm() {
     if (name.includes(".")) {
       // Handle nested objects like styleWords.word1
       const [parent, child] = name.split(".");
-      setFormData((prev) => ({
-        ...prev,
-        [parent]: {
-          ...prev[parent as keyof FormData],
-          [child]: value,
-        },
-      }));
+
+      setFormData((prev) => {
+        // Type safe way to handle nested objects
+        if (parent === "styleWords") {
+          return {
+            ...prev,
+            styleWords: {
+              ...prev.styleWords,
+              [child]: value,
+            },
+          };
+        }
+
+        // If we need to handle other nested objects in the future
+        return {
+          ...prev,
+          [parent]: {
+            ...(prev[parent as keyof typeof prev] as Record<string, any>),
+            [child]: value,
+          },
+        };
+      });
     } else {
       setFormData((prev) => ({
         ...prev,
