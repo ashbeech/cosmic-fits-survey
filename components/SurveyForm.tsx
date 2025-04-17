@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import DateTimeInput from "./DateTimeInput";
 
 type FormData = {
   name: string;
@@ -425,49 +426,16 @@ export default function SurveyForm() {
 
             {/* Question 1: Birthdate */}
             <div className="question-section">
-              <label className="question-label required">
-                Full Birthdate (If time is unknown, put 00:00am)
-              </label>
-              <table className="w-full">
-                <tbody>
-                  <tr>
-                    <td className="w-1/2 pr-3">
-                      <label className="block text-sm font-medium text-gray-500 mb-2">
-                        Date
-                      </label>
-                      <input
-                        type="date"
-                        name="birthdate"
-                        value={formData.birthdate}
-                        onChange={handleInputChange}
-                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
-                      />
-                      {errors.birthdate && (
-                        <span className="text-red-500 text-xs mt-2 block">
-                          {errors.birthdate}
-                        </span>
-                      )}
-                    </td>
-                    <td className="w-1/2 pl-3">
-                      <label className="block text-sm font-medium text-gray-500 mb-2">
-                        Time
-                      </label>
-                      <input
-                        type="time"
-                        name="birthtime"
-                        value={formData.birthtime}
-                        onChange={handleInputChange}
-                        className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
-                      />
-                      {errors.birthtime && (
-                        <span className="text-red-500 text-xs mt-2 block">
-                          {errors.birthtime}
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <DateTimeInput
+                dateValue={formData.birthdate}
+                timeValue={formData.birthtime}
+                onDateChange={handleInputChange}
+                onTimeChange={handleInputChange}
+                dateError={errors.birthdate}
+                timeError={errors.birthtime}
+                dateName="birthdate"
+                timeName="birthtime"
+              />
             </div>
 
             {/* Question 2: Birthplace */}

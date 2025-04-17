@@ -147,72 +147,58 @@ select:focus {
   }
 }
 
-.time-input-group {
-  display: flex;
-  align-items: center;
-}
-
-.time-input-group input {
-  width: 4rem;
-  text-align: center;
-}
-
-.time-separator {
-  margin: 0 0.5rem;
-  font-weight: 500;
-}
-
-.ampm-select {
-  width: auto;
-  margin-left: 0.5rem;
-}
-
-.checkbox-group,
-.radio-group {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
-}
-
-@media (min-width: 640px) {
-  .checkbox-group {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 768px) {
-  .checkbox-group {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.checkbox-item,
-.radio-item {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  padding: 0.75rem;
-  border-radius: 0.375rem;
+/* DateTime Input Custom Styling */
+input[type="date"].date-input,
+input[type="time"].time-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 0.75rem;
   border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  background-color: white;
+  font-size: 1rem;
   transition: all 0.2s;
+}
+
+/* Hide native calendar icon in Chrome */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* Custom focus styles */
+input[type="date"].date-input:focus,
+input[type="time"].time-input:focus {
+  outline: none;
+  border-color: rgb(var(--accent-color));
+  box-shadow: 0 0 0 3px rgba(var(--accent-color), 0.2);
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 640px) {
+  input[type="date"].date-input,
+  input[type="time"].time-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.7rem 2rem 0.7rem 0.7rem;
+  }
+}
+
+/* Ensure consistent field appearance */
+.input-icon-container {
+  position: relative;
+  width: 100%;
 }
 
 .py-2 {
   padding-bottom: 0.75rem;
-}
-
-.checkbox-item:hover,
-.radio-item:hover {
-  border-color: rgb(var(--accent-color));
-  background-color: rgba(var(--accent-light), 0.3);
-}
-
-.checkbox-item input,
-.radio-item input {
-  margin-right: 0.75rem;
-  height: 1rem;
-  width: 1rem;
-  cursor: pointer;
 }
 
 input[type="checkbox"],
@@ -243,40 +229,6 @@ input[type="radio"] {
 .submit-button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
-}
-
-/* Success message */
-.success-message {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: var(--form-shadow);
-  padding: 2rem;
-  text-align: center;
-  max-width: 32rem;
-  margin: 3rem auto;
-}
-
-.success-title {
-  color: rgb(var(--accent-color));
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-/* Error styling */
-.error-message {
-  color: #e53e3e;
-  font-size: 0.75rem;
-  margin-top: 0.5rem;
-  text-align: center;
-}
-
-.form-error-alert {
-  background-color: #f0f5ff;
-  border-left: 4px solid rgb(var(--accent-color));
-  color: rgb(var(--accent-color));
-  padding: 1rem;
-  margin-bottom: 1rem;
 }
 
 /* Preference Matrix Styling */
@@ -405,12 +357,6 @@ input[type="radio"] {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.answer-hint {
-  font-size: 0.875rem;
-  color: #718096;
-  margin-top: 0.5rem;
-}
-
 /* Basic reset for form elements */
 input[type="radio"],
 input[type="checkbox"] {
@@ -518,7 +464,7 @@ input[type="checkbox"]:disabled {
 .checkbox-option {
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
 }
 
 /* Preference matrix custom styles */
