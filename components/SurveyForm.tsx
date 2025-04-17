@@ -1329,11 +1329,13 @@ export default function SurveyForm() {
               )}
             </div>
 
-            <div className="p-8">
+            <div className="footer-message p-8">
               <div className="bg-indigo-50 rounded-md p-6 mb-8 border border-indigo-100 text-center">
                 <p className="text-sm text-indigo-700">
                   Thank you for taking the time to complete this survey. Your
-                  responses will help us understand your unique style journey.
+                  responses will help me understand your unique style - with a
+                  goal to help you effortlessly look your very best everyday
+                  while saving you time, and money through your wardrobe.
                 </p>
               </div>
               <button

@@ -612,3 +612,12 @@ input[type="checkbox"]:disabled {
   border-radius: 50%;
   background: #4a5568;
 }
+
+.text-xs {
+  font-size: 0.75rem;
+}
+
+.footer-message p {
+  padding-left: 1.25em;
+  padding-right: 1.25em;
+}

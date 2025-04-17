@@ -6,8 +6,11 @@ export default function Home() {
       <div className="content">
         <SurveyForm />
 
-        <footer className="mt-12 text-center text-sm text-gray-500 pb-8">
-          <p>© {new Date().getFullYear()} Cosmic Fits. All rights reserved.</p>
+        <footer className="mt-12 text-center text-xs text-gray-500 pb-8">
+          <p>
+            © {new Date().getFullYear()} <i>this is bullish</i>. All rights
+            reserved.
+          </p>
         </footer>
       </div>
     </main>
