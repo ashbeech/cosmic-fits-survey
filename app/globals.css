@@ -244,6 +244,8 @@ select:focus {
   z-index: 1;
 }
 
+/* DateTime Input Styling */
+
 /* Base styles for inputs */
 input[type="date"],
 input[type="time"] {
