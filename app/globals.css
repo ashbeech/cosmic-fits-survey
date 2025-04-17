@@ -135,66 +135,189 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(var(--accent-color), 0.2);
 }
 
+/* Date/Time Picker Layout */
 .date-time-picker {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: row;
   gap: 1rem;
+  align-items: flex-start;
+  width: 100%;
 }
 
-@media (min-width: 640px) {
-  .date-time-picker {
-    grid-template-columns: 1fr 1fr;
-  }
+.date-time-picker > div {
+  flex: 1;
+  min-width: 0;
 }
 
-/* DateTime Input Custom Styling */
-input[type="date"].date-input,
-input[type="time"].time-input {
+.custom-date-input,
+.custom-time-input {
+  position: relative;
+  width: 100%;
+}
+
+.date-time-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Base styles for date and time inputs */
+.custom-date-input input[type="date"],
+.custom-time-input input[type="time"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   width: 100%;
-  padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
   border: 1px solid #e2e8f0;
   border-radius: 0.5rem;
   background-color: white;
   font-size: 1rem;
   transition: all 0.2s;
+  height: 48px;
 }
 
-/* Hide native calendar icon in Chrome */
+/* Hide default calendar and time picker icons */
+.custom-date-input input[type="date"]::-webkit-calendar-picker-indicator,
+.custom-time-input input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+/* Show placeholder text for date and time inputs */
+.custom-date-input input[type="date"]:not(:valid):not(:focus),
+.custom-time-input input[type="time"]:not(:valid):not(:focus) {
+  color: #6b7280;
+}
+
+.custom-date-input input[type="date"]:not(:valid):not(:focus)::before {
+  content: "dd/mm/yyyy";
+  color: #9ca3af;
+}
+
+.custom-time-input input[type="time"]:not(:valid):not(:focus)::before {
+  content: "00:00";
+  color: #9ca3af;
+}
+
+/* Focus states */
+.custom-date-input input[type="date"]:focus,
+.custom-time-input input[type="time"]:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .custom-date-input input[type="date"],
+  .custom-time-input input[type="time"] {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.7rem 2rem 0.7rem 0.7rem;
+  }
+
+  /* On mobile, ensure the placeholder text is properly sized */
+  .custom-date-input input[type="date"]:not(:valid):not(:focus)::before,
+  .custom-time-input input[type="time"]:not(:valid):not(:focus)::before {
+    font-size: 16px;
+  }
+}
+
+/* Make sure icons stay in the right position */
+.custom-date-input svg,
+.custom-time-input svg {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #6b7280;
+  z-index: 1;
+}
+
+/* Base styles for inputs */
+input[type="date"],
+input[type="time"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  background-color: white;
+  font-size: 1rem;
+  height: 48px;
+}
+
+/* Hide native calendar and time picker icons but keep functionality */
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
   opacity: 0;
   position: absolute;
-  right: 0;
-  top: 0;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
   cursor: pointer;
 }
 
-/* Custom focus styles */
-input[type="date"].date-input:focus,
-input[type="time"].time-input:focus {
-  outline: none;
-  border-color: rgb(var(--accent-color));
-  box-shadow: 0 0 0 3px rgba(var(--accent-color), 0.2);
+/* Placeholder text for empty fields */
+input[type="date"]:not(:valid):not(:focus)::before {
+  content: "dd/mm/yyyy";
+  color: #9ca3af;
 }
 
-/* Mobile specific adjustments */
+input[type="time"]:not(:valid):not(:focus)::before {
+  content: "00:00";
+  color: #9ca3af;
+}
+
+/* Focus states */
+input[type="date"]:focus,
+input[type="time"]:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+/* Mobile optimizations */
 @media (max-width: 640px) {
-  input[type="date"].date-input,
-  input[type="time"].time-input {
+  input[type="date"],
+  input[type="time"] {
     font-size: 16px; /* Prevents zoom on iOS */
-    padding: 0.7rem 2rem 0.7rem 0.7rem;
   }
 }
 
-/* Ensure consistent field appearance */
-.input-icon-container {
-  position: relative;
-  width: 100%;
+/* Ensure the Date/Time labels are properly styled */
+.question-section .block {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+/* Style for the calendar and clock icons */
+.question-section svg {
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.date-time-icon {
+  position: absolute;
+  right: 0.25rem;
+  top: 1.25rem;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .py-2 {
