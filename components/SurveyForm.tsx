@@ -44,7 +44,7 @@ type FormData = {
 };
 
 type ErrorState = {
-  name: string;
+  name?: string;
   birthdate?: string;
   birthtime?: string;
   birthplace?: string;
@@ -122,9 +122,7 @@ export default function SurveyForm() {
   });
 
   // Form error state
-  const [errors, setErrors] = useState<ErrorState>({
-    name: "",
-  });
+  const [errors, setErrors] = useState<ErrorState>({});
 
   // Form submission state
   const [submitting, setSubmitting] = useState(false);
@@ -202,11 +200,13 @@ export default function SurveyForm() {
 
   // Validate the form
   const validateForm = () => {
-    const newErrors: ErrorState = {
-      name: "",
-    };
+    const newErrors: ErrorState = {};
 
     // Required fields
+    if (!formData.name) {
+      newErrors.name = "Your name is key to your cosmic fit";
+    }
+
     if (!formData.birthdate) {
       newErrors.birthdate = "Your date of birth is key to your cosmic fit";
     }
@@ -383,8 +383,8 @@ export default function SurveyForm() {
           Thank You!
         </h2>
         <p className="mb-4 text-center">
-          Your cosmic fits survey has been submitted successfully. We appreciate
-          your time and insights!
+          Your cosmic fits survey has been submitted successfully. I really
+          appreciate your time and insights!
         </p>
       </div>
     );
@@ -1329,7 +1329,7 @@ export default function SurveyForm() {
               )}
             </div>
 
-            <div className="footer-message p-8">
+            <div className="end-message p-8">
               <div className="bg-indigo-50 rounded-md p-6 mb-8 border border-indigo-100 text-center">
                 <p className="text-sm text-indigo-700">
                   Thank you for taking the time to complete this survey. Your

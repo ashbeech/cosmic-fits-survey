@@ -44,6 +44,13 @@ h6 {
   font-weight: 600;
 }
 
+/* To ensure the footer doesn't overlap with content if the page is short */
+main {
+  min-height: 100vh;
+  position: relative; /* Makes the absolute positioning of footer relative to main */
+  background-image: linear-gradient(to bottom, #f9fafb, #ffffff);
+}
+
 .survey-container {
   width: 100%;
   max-width: 800px;
@@ -623,11 +630,23 @@ p {
   font-size: 0.75rem;
 }
 
-.footer-message p {
+.end-message p {
   padding-left: 1.25em;
   padding-right: 1.25em;
 }
 
 .text-red-500 {
   color: #e53e3e !important;
+}
+
+/* CSS for positioning the footer at the bottom left */
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: left;
+  font-size: 0.75rem; /* equivalent to text-xs */
+  color: #6b7280; /* equivalent to text-gray-500 */
+  padding: 0.5rem; /* equivalent to p-4 */
 }
