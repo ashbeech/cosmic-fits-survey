@@ -21,14 +21,14 @@ type FormData = {
     word3: string;
   };
   fabricPreferences: string[];
-  comfortVsStructure: string;
-  simpleVsLayered: string;
-  neutralsVsColor: string;
+  comfortVsStructure: number;
+  simpleVsLayered: number;
+  neutralsVsColor: number;
   outfitBuilding: string;
   outfitBuildingOther: string;
   styleEvolution: string;
-  blendVsStandout: string;
-  expressVsShift: string;
+  blendVsStandout: number;
+  expressVsShift: number;
   styleFeedback: string;
   feelingPowerful: string;
   styleAvoidance: string;
@@ -99,14 +99,14 @@ export default function SurveyForm() {
       word3: "",
     },
     fabricPreferences: [],
-    comfortVsStructure: "",
-    simpleVsLayered: "",
-    neutralsVsColor: "",
+    comfortVsStructure: 5,
+    simpleVsLayered: 5,
+    neutralsVsColor: 5,
     outfitBuilding: "",
     outfitBuildingOther: "",
     styleEvolution: "",
-    blendVsStandout: "",
-    expressVsShift: "",
+    blendVsStandout: 5,
+    expressVsShift: 5,
     styleFeedback: "",
     feelingPowerful: "",
     styleAvoidance: "",
@@ -136,6 +136,15 @@ export default function SurveyForm() {
     >
   ) => {
     const { name, value } = e.target;
+
+    // Handle the case where the time is unknown
+    if (name === "birthtime" && value === "unknown") {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+      return;
+    }
 
     if (name.includes(".")) {
       // Handle nested objects like styleWords.word1
@@ -207,12 +216,26 @@ export default function SurveyForm() {
       newErrors.name = "Your name is key to your cosmic fit";
     }
 
+    // Validate birthdate
     if (!formData.birthdate) {
       newErrors.birthdate = "Your date of birth is key to your cosmic fit";
+    } else {
+      // Check if the date is valid (YYYY-MM-DD format)
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRegex.test(formData.birthdate)) {
+        newErrors.birthdate = "Please enter a valid date";
+      }
     }
 
+    // Validate birthtime
     if (!formData.birthtime) {
       newErrors.birthtime = "Your birth time is key to your cosmic fit";
+    } else if (formData.birthtime !== "unknown") {
+      // Check if the time is valid (HH:MM format)
+      const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+      if (!timeRegex.test(formData.birthtime)) {
+        newErrors.birthtime = "Please enter a valid time";
+      }
     }
 
     if (!formData.birthplace) {
@@ -259,18 +282,7 @@ export default function SurveyForm() {
       newErrors.styleWords = styleWordsErrors;
     }
 
-    // Preference selections
-    if (!formData.comfortVsStructure) {
-      newErrors.comfortVsStructure = "Please make a selection";
-    }
-
-    if (!formData.simpleVsLayered) {
-      newErrors.simpleVsLayered = "Please make a selection";
-    }
-
-    if (!formData.neutralsVsColor) {
-      newErrors.neutralsVsColor = "Please make a selection";
-    }
+    // Preference selections are now optional sliders, no validation needed
 
     if (!formData.outfitBuilding) {
       newErrors.outfitBuilding = "Outfit building is key to your cosmic fit";
@@ -278,14 +290,6 @@ export default function SurveyForm() {
 
     if (!formData.styleEvolution) {
       newErrors.styleEvolution = "Style evolution is key to your cosmic fit";
-    }
-
-    if (!formData.blendVsStandout) {
-      newErrors.blendVsStandout = "This is key to your cosmic fit";
-    }
-
-    if (!formData.expressVsShift) {
-      newErrors.expressVsShift = "This is key to your cosmic fit";
     }
 
     if (!formData.styleFeedback) {
@@ -467,14 +471,14 @@ export default function SurveyForm() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {[
                   "Pop",
-                  "Rock",
+                  "Rock (Classic, Metal, Punk etc)",
                   "Hip-Hop",
                   "Electronic Dance Music (EDM)",
                   "R&B",
                   "Latin",
                   "Country",
                   "Classical",
-                  "Metal",
+                  "Traditional",
                 ].map((genre) => (
                   <div
                     key={genre}
@@ -521,7 +525,7 @@ export default function SurveyForm() {
                 onChange={handleInputChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
-                placeholder="e.g. Radiohead, Beyoncé, Taylor Swift..."
+                placeholder="e.g. Radiohead, Beyoncé, The Beatles..."
               ></textarea>
               {errors.artists && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
@@ -542,7 +546,7 @@ export default function SurveyForm() {
                 onChange={handleInputChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
-                placeholder="e.g. Science fiction, romantic comedies, anime..."
+                placeholder="e.g. Science Fiction, Romantic Comedies, Anime, Seinfeld, Tarantino Movies..."
               ></textarea>
               {errors.moviesShows && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
@@ -563,7 +567,7 @@ export default function SurveyForm() {
                 onChange={handleInputChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
-                placeholder="e.g. Punk, skater, goth, preppy..."
+                placeholder="e.g. Punk, skater, goth, preppy, mod..."
               ></textarea>
               {errors.subcultures && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
@@ -652,7 +656,7 @@ export default function SurveyForm() {
                 onChange={handleInputChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-0"
                 rows={3}
-                placeholder="e.g. Princess Diana, David Bowie, Rihanna..."
+                placeholder="e.g. Princess Diana, David Bowie, Rihanna, Phoebe from Friends..."
               ></textarea>
               {errors.styleIcons && (
                 <span className="text-red-500 text-xs mt-2 block text-center">
@@ -749,109 +753,65 @@ export default function SurveyForm() {
 
             {/* Question 11: Preferences */}
             <div className="question-section">
-              <label className="question-label required">
-                Which do you prefer?
+              <label className="question-label">
+                Which do you prefer? (Slide to indicate your preference)
               </label>
 
-              <div className="preference-matrix">
-                <div className="preference-matrix-header">
-                  <div className="preference-matrix-option">1</div>
-                  <div className="preference-matrix-label"></div>
-                  <div className="preference-matrix-option">2</div>
-                </div>
-
-                <div className="preference-matrix-row">
-                  <div className="preference-matrix-option">
+              <div className="preference-sliders max-w-2xl mx-auto">
+                <div className="slider-container mb-8">
+                  <div className="slider-labels" style={{ width: "100%" }}>
+                    <span>Comfort</span>
+                    <span>Structure</span>
+                  </div>
+                  <div className="slider-track">
                     <input
-                      type="radio"
-                      id="comfort"
+                      type="range"
+                      min="1"
+                      max="10"
                       name="comfortVsStructure"
-                      value="Comfort"
-                      checked={formData.comfortVsStructure === "Comfort"}
-                      onChange={handleInputChange}
-                      className="preference-radio"
-                    />
-                  </div>
-                  <div className="preference-matrix-label">
-                    Comfort / Structure
-                  </div>
-                  <div className="preference-matrix-option">
-                    <input
-                      type="radio"
-                      id="structure"
-                      name="comfortVsStructure"
-                      value="Structure"
-                      checked={formData.comfortVsStructure === "Structure"}
-                      onChange={handleInputChange}
-                      className="preference-radio"
+                      value={formData.comfortVsStructure}
+                      onChange={handleRangeChange}
+                      className="slider-input"
                     />
                   </div>
                 </div>
 
-                <div className="preference-matrix-row">
-                  <div className="preference-matrix-option">
-                    <input
-                      type="radio"
-                      id="simple"
-                      name="simpleVsLayered"
-                      value="Simple"
-                      checked={formData.simpleVsLayered === "Simple"}
-                      onChange={handleInputChange}
-                      className="preference-radio"
-                    />
+                <div className="slider-container mb-8">
+                  <div className="slider-labels" style={{ width: "100%" }}>
+                    <span>Simple</span>
+                    <span>Layered</span>
                   </div>
-                  <div className="preference-matrix-label">
-                    Simple / Layered
-                  </div>
-                  <div className="preference-matrix-option">
+                  <div className="slider-track">
                     <input
-                      type="radio"
-                      id="layered"
+                      type="range"
+                      min="1"
+                      max="10"
                       name="simpleVsLayered"
-                      value="Layered"
-                      checked={formData.simpleVsLayered === "Layered"}
-                      onChange={handleInputChange}
-                      className="preference-radio"
+                      value={formData.simpleVsLayered}
+                      onChange={handleRangeChange}
+                      className="slider-input"
                     />
                   </div>
                 </div>
 
-                <div className="preference-matrix-row">
-                  <div className="preference-matrix-option">
-                    <input
-                      type="radio"
-                      id="neutrals"
-                      name="neutralsVsColor"
-                      value="Neutrals"
-                      checked={formData.neutralsVsColor === "Neutrals"}
-                      onChange={handleInputChange}
-                      className="preference-radio"
-                    />
+                <div className="slider-container mb-8">
+                  <div className="slider-labels" style={{ width: "100%" }}>
+                    <span>Neutrals</span>
+                    <span>Colour</span>
                   </div>
-                  <div className="preference-matrix-label">
-                    Neutrals / Colour
-                  </div>
-                  <div className="preference-matrix-option">
+                  <div className="slider-track">
                     <input
-                      type="radio"
-                      id="color"
+                      type="range"
+                      min="1"
+                      max="10"
                       name="neutralsVsColor"
-                      value="Color"
-                      checked={formData.neutralsVsColor === "Color"}
-                      onChange={handleInputChange}
-                      className="preference-radio"
+                      value={formData.neutralsVsColor}
+                      onChange={handleRangeChange}
+                      className="slider-input"
                     />
                   </div>
                 </div>
               </div>
-
-              {(errors.comfortVsStructure ||
-                errors.simpleVsLayered ||
-                errors.neutralsVsColor) && (
-                <span className="text-red-500 text-xs mt-2 block text-center">
-                  Please make all three selections
-                </span>
-              )}
             </div>
 
             {/* Question 12: Outfit Building */}
@@ -945,119 +905,89 @@ export default function SurveyForm() {
 
             {/* Question 14: Blend vs Standout */}
             <div className="question-section">
-              <label className="question-label required">
+              <label className="question-label">
                 Do you feel more like yourself when you blend in or stand out?
               </label>
-              <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 max-w-2xl mx-auto">
-                <div className="flex-1 bg-white p-4 rounded border border-gray-200 hover:border-indigo-300 transition">
-                  <div className="flex items-center space-x-3">
-                    <input
-                      type="radio"
-                      id="blend"
-                      name="blendVsStandout"
-                      value="Blend in"
-                      checked={formData.blendVsStandout === "Blend in"}
-                      onChange={handleInputChange}
-                      className="form-radio h-4 w-4"
-                    />
-                    <label
-                      htmlFor="blend"
-                      className="text-gray-700 font-medium"
-                    >
-                      Blend in
-                    </label>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2 ml-7">
-                    I prefer to look appropriate and harmonious with my
-                    surroundings
-                  </p>
+              <div className="slider-container mb-8">
+                <div className="slider-labels" style={{ width: "100%" }}>
+                  <span style={{ width: "50%", textAlign: "left" }}>
+                    Blend in
+                  </span>
+                  <span style={{ width: "50%", textAlign: "right" }}>
+                    Stand out
+                  </span>
                 </div>
-                <div className="flex-1 bg-white p-4 rounded border border-gray-200 hover:border-indigo-300 transition">
-                  <div className="flex items-center space-x-3">
-                    <input
-                      type="radio"
-                      id="standout"
-                      name="blendVsStandout"
-                      value="Stand out"
-                      checked={formData.blendVsStandout === "Stand out"}
-                      onChange={handleInputChange}
-                      className="form-radio h-4 w-4"
-                    />
-                    <label
-                      htmlFor="standout"
-                      className="text-gray-700 font-medium"
-                    >
-                      Stand out
-                    </label>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2 ml-7">
-                    I prefer to express my uniqueness and individuality
-                  </p>
+                <div className="slider-track">
+                  <input
+                    type="range"
+                    min="1"
+                    max="10"
+                    name="blendVsStandout"
+                    value={formData.blendVsStandout}
+                    onChange={handleRangeChange}
+                    className="slider-input"
+                  />
                 </div>
               </div>
-              {errors.blendVsStandout && (
-                <span className="text-red-500 text-xs mt-2 block text-center">
-                  {errors.blendVsStandout}
-                </span>
-              )}
+              <div className="max-w-2xl mx-auto">
+                <table className="w-full text-xs text-gray-500">
+                  <tbody>
+                    <tr>
+                      <td width="33%" className="align-top text-left pr-2">
+                        I prefer to look appropriate and harmonious with my
+                        surroundings
+                      </td>
+                      <td width="33%"></td>
+                      <td width="33%" className="align-top text-right pl-2">
+                        I prefer to express my uniqueness and individuality
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             {/* Question 15: Express vs Shift */}
             <div className="question-section">
-              <label className="question-label required">
+              <label className="question-label">
                 Do you dress to express how you feel, or to shift how you feel?
               </label>
-              <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 max-w-2xl mx-auto">
-                <div className="flex-1 bg-white p-4 rounded border border-gray-200 hover:border-indigo-300 transition">
-                  <div className="flex items-center space-x-3">
-                    <input
-                      type="radio"
-                      id="express"
-                      name="expressVsShift"
-                      value="Express"
-                      checked={formData.expressVsShift === "Express"}
-                      onChange={handleInputChange}
-                      className="form-radio h-4 w-4"
-                    />
-                    <label
-                      htmlFor="express"
-                      className="text-gray-700 font-medium"
-                    >
-                      Express
-                    </label>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2 ml-7">
-                    My clothes reflect my current emotions and state of mind
-                  </p>
+              <div className="slider-container mb-8">
+                <div className="slider-labels" style={{ width: "100%" }}>
+                  <span style={{ width: "50%", textAlign: "left" }}>
+                    Express
+                  </span>
+                  <span style={{ width: "50%", textAlign: "right" }}>
+                    Shift
+                  </span>
                 </div>
-                <div className="flex-1 bg-white p-4 rounded border border-gray-200 hover:border-indigo-300 transition">
-                  <div className="flex items-center space-x-3">
-                    <input
-                      type="radio"
-                      id="shift"
-                      name="expressVsShift"
-                      value="Shift"
-                      checked={formData.expressVsShift === "Shift"}
-                      onChange={handleInputChange}
-                      className="form-radio h-4 w-4"
-                    />
-                    <label
-                      htmlFor="shift"
-                      className="text-gray-700 font-medium"
-                    >
-                      Shift
-                    </label>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2 ml-7">
-                    I use clothes to change how I feel or want to feel
-                  </p>
+                <div className="slider-track">
+                  <input
+                    type="range"
+                    min="1"
+                    max="10"
+                    name="expressVsShift"
+                    value={formData.expressVsShift}
+                    onChange={handleRangeChange}
+                    className="slider-input"
+                  />
                 </div>
               </div>
-              {errors.expressVsShift && (
-                <span className="text-red-500 text-xs mt-2 block text-center">
-                  {errors.expressVsShift}
-                </span>
-              )}
+              <div className="max-w-2xl mx-auto">
+                <table className="w-full text-xs text-gray-500">
+                  <tbody>
+                    <tr>
+                      <td width="33%" className="align-top text-left pr-2">
+                        My clothes reflect my current emotions and state of mind
+                      </td>
+                      <td width="33%"></td>
+                      <td width="33%" className="align-top text-right pl-2">
+                        I use clothes to change how I feel or want to feel
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             {/* Question 16: Style Feedback */}

@@ -158,106 +158,33 @@ select:focus {
   min-width: 0;
 }
 
-.custom-date-input,
-.custom-time-input {
+.date-field,
+.time-field {
   position: relative;
   width: 100%;
 }
 
-.date-time-icon {
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
+.unknown-time-checkbox {
+  display: flex;
+  align-items: center;
+  height: 48px; /* Same height as input fields */
+}
+
+.unknown-time-checkbox input[type="checkbox"] {
+  margin-right: 10px;
 }
 
 /* Base styles for date and time inputs */
-.custom-date-input input[type="date"],
-.custom-time-input input[type="time"] {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 100%;
-  padding: 0.75rem 2.5rem 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  background-color: white;
-  font-size: 1rem;
-  transition: all 0.2s;
-  height: 48px;
+.date-field input[type="number"],
+.time-field input[type="time"] {
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
 }
 
-/* Hide default calendar and time picker icons */
-.custom-date-input input[type="date"]::-webkit-calendar-picker-indicator,
-.custom-time-input input[type="time"]::-webkit-calendar-picker-indicator {
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  cursor: pointer;
-}
-
-/* Show placeholder text for date and time inputs */
-.custom-date-input input[type="date"]:not(:valid):not(:focus),
-.custom-time-input input[type="time"]:not(:valid):not(:focus) {
-  color: #6b7280;
-}
-
-.custom-date-input input[type="date"]:not(:valid):not(:focus)::before {
-  content: "dd/mm/yyyy";
-  color: #9ca3af;
-}
-
-.custom-time-input input[type="time"]:not(:valid):not(:focus)::before {
-  content: "00:00";
-  color: #9ca3af;
-}
-
-/* Focus states */
-.custom-date-input input[type="date"]:focus,
-.custom-time-input input[type="time"]:focus {
-  outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-/* Mobile optimizations */
-@media (max-width: 640px) {
-  .custom-date-input input[type="date"],
-  .custom-time-input input[type="time"] {
-    font-size: 16px; /* Prevents zoom on iOS */
-    padding: 0.7rem 2rem 0.7rem 0.7rem;
-  }
-
-  /* On mobile, ensure the placeholder text is properly sized */
-  .custom-date-input input[type="date"]:not(:valid):not(:focus)::before,
-  .custom-time-input input[type="time"]:not(:valid):not(:focus)::before {
-    font-size: 16px;
-  }
-}
-
-/* Make sure icons stay in the right position */
-.custom-date-input svg,
-.custom-time-input svg {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: #6b7280;
-  z-index: 1;
-}
-
-/* DateTime Input Styling */
-
-/* Base styles for inputs */
+/* Base styles for date and time inputs */
 input[type="date"],
-input[type="time"] {
+input[type="time"],
+input[type="number"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -288,14 +215,16 @@ input[type="date"]:not(:valid):not(:focus)::before {
   color: #9ca3af;
 }
 
-input[type="time"]:not(:valid):not(:focus)::before {
+/* Active time input placeholder */
+input[type="time"]:not(:disabled):not(:valid):not(:focus)::before {
   content: "00:00";
   color: #9ca3af;
 }
 
 /* Focus states */
 input[type="date"]:focus,
-input[type="time"]:focus {
+input[type="time"]:focus,
+input[type="number"]:focus {
   outline: none;
   border-color: #6366f1;
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
@@ -304,7 +233,8 @@ input[type="time"]:focus {
 /* Mobile optimizations */
 @media (max-width: 640px) {
   input[type="date"],
-  input[type="time"] {
+  input[type="time"],
+  input[type="number"] {
     font-size: 16px; /* Prevents zoom on iOS */
   }
 }
@@ -443,6 +373,10 @@ input[type="radio"] {
   margin-bottom: 8px;
   color: #4a5568;
   font-size: 0.9rem;
+}
+
+.slider-labels span:last-child {
+  text-align: right;
 }
 
 .slider-track {
@@ -639,6 +573,10 @@ p {
   color: #e53e3e !important;
 }
 
+.text-right {
+  text-align: right;
+}
+
 /* CSS for positioning the footer at the bottom left */
 footer {
   position: absolute;
@@ -649,4 +587,411 @@ footer {
   font-size: 0.75rem; /* equivalent to text-xs */
   color: #6b7280; /* equivalent to text-gray-500 */
   padding: 0.5rem; /* equivalent to p-4 */
+}
+
+/* Styles for disabled time input */
+.time-field input[type="time"]:disabled {
+  color: #9ca3af;
+  background-color: #f3f4f6;
+}
+
+/* Custom styles for disabled time input's placeholder */
+.time-field input[type="time"]:disabled::-webkit-datetime-edit {
+  content: "--:--";
+  color: #9ca3af;
+  opacity: 0.7;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 640px) {
+  /* Make survey container take maximum width on mobile */
+  .survey-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5rem 0.25rem;
+  }
+
+  /* Reduce border radius and shadows for mobile */
+  .survey-form {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+  }
+
+  /* Ensure consistent text sizes for form elements on mobile */
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+  input[type="email"],
+  textarea,
+  select,
+  input[type="radio"] + label,
+  input[type="checkbox"] + label,
+  ::placeholder {
+    font-size: 0.85rem !important; /* Consistent with mobile scaling */
+  }
+
+  /* Reduce all text sizes by 15% instead of 25% */
+  body,
+  p,
+  span,
+  input,
+  textarea,
+  select,
+  button,
+  label,
+  .text-xs,
+  .text-sm,
+  .text-base,
+  .text-lg,
+  .text-xl,
+  .text-2xl {
+    font-size: 85% !important; /* 85% of the original size */
+  }
+
+  /* Heading text sizes */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: 85%;
+  }
+
+  /* Increase h1 size by 15% */
+  h1 {
+    font-size: 100% !important; /* Back to 100% of original size */
+  }
+
+  /* Reduce margins and spacings */
+  .question-label {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem !important; /* Increase from 0.85rem */
+  }
+
+  /* Reduce all margins and paddings throughout the page */
+  .survey-container > *,
+  .question-section > * {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Space-saving adjustments for sections */
+  .question-section {
+    padding: 0.75rem 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Reduce input grid gaps */
+  .grid {
+    gap: 0.5rem !important;
+  }
+
+  /* Survey header adjustments */
+  .survey-header {
+    padding: 0.75rem 0.5rem;
+  }
+
+  /* Reduce padding in input fields */
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+  input[type="number"],
+  input[type="email"],
+  textarea,
+  select {
+    padding: 0.375rem;
+    height: 40px;
+  }
+
+  textarea {
+    padding: 0.375rem;
+    height: auto;
+  }
+
+  /* Adjust date/time pickers for mobile */
+  .date-field input[type="number"],
+  .time-field input[type="time"] {
+    padding-left: 0.1875rem;
+    padding-right: 0.1875rem;
+    height: 40px;
+  }
+
+  /* Adjust heights for consistent mobile view */
+  .unknown-time-checkbox {
+    height: 40px;
+  }
+
+  /* Adjust date time picker spacing */
+  .date-time-picker {
+    gap: 0.25rem !important;
+  }
+
+  /* Adjust button sizes */
+  .submit-button {
+    padding: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  /* Adjust checkbox and radio sizes */
+  input[type="checkbox"],
+  input[type="radio"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Adjust preference matrix for mobile */
+  .preference-matrix-option {
+    padding: 8px 5px;
+  }
+
+  .preference-matrix-label {
+    padding: 8px;
+  }
+
+  /* Optimize end message section */
+  .end-message {
+    padding: 0.5rem !important;
+  }
+
+  .end-message .bg-indigo-50 {
+    padding: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Adjust checkbox and label spacing on mobile */
+  .unknown-time-checkbox input[type="checkbox"] {
+    margin-right: 5px !important;
+  }
+
+  /* Target the specific class we added */
+  .mobile-checkbox {
+    margin-right: 5px !important;
+  }
+
+  /* More specific rule to override any inline styles */
+  .unknown-time-checkbox label input[type="checkbox"] {
+    margin-right: 5px !important;
+  }
+
+  /* Mobile adjustments */
+  .label-cell {
+    padding-left: 3px; /* Reduced from 5px to 3px */
+  }
+
+  /* Make spacing consistent with date field spacing */
+  .date-time-picker {
+    gap: 0.25rem !important;
+  }
+
+  /* Ensure checkbox cell width is smaller on mobile */
+  .checkbox-cell {
+    width: 20px; /* Reduced from 25px */
+  }
+}
+
+/* Checkbox table structure */
+.checkbox-table {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.checkbox-cell {
+  display: table-cell;
+  width: 25px;
+  vertical-align: middle;
+}
+
+.label-cell {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 4px;
+  line-height: 1.2;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  .label-cell {
+    padding-left: 3px; /* Reduced from 5px to 3px */
+  }
+
+  /* Make spacing consistent with date field spacing */
+  .date-time-picker {
+    gap: 0.25rem !important;
+  }
+
+  /* Ensure checkbox cell width is smaller on mobile */
+  .checkbox-cell {
+    width: 20px; /* Reduced from 25px */
+  }
+}
+
+/* Fix checkbox tick alignment */
+input[type="checkbox"]:checked::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid #4a5568;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Mobile-specific checkbox tick alignment */
+@media (max-width: 640px) {
+  /* Completely redesign the mobile checkbox appearance */
+  input[type="checkbox"] {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+  }
+
+  /* Create a perfectly centered checkmark */
+  input[type="checkbox"]:checked::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    width: 4px;
+    height: 8px;
+    border: solid #4a5568;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  /* Ensure our specific mobile checkbox also uses the centered approach */
+  .mobile-checkbox:checked::before {
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+}
+
+/* Mobile-specific radio button dot alignment */
+@media (max-width: 640px) {
+  /* Adjust radio button size and appearance */
+  input[type="radio"] {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+  }
+
+  /* Create a perfectly centered radio dot */
+  input[type="radio"]:checked::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4a5568;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Special styling for radio buttons in the preference matrix */
+  .preference-radio:checked::before {
+    left: 50%;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Preference Sliders */
+.preference-sliders {
+  padding: 1rem 0;
+}
+
+.preference-slider-container {
+  margin-bottom: 2rem;
+}
+
+.slider-input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to right, #e0e7ff, #6366f1);
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+}
+
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 2px solid #6366f1;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.slider-input::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 2px solid #6366f1;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile adjustments for sliders */
+@media (max-width: 640px) {
+  .slider-input::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+  }
+
+  .slider-input::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+  }
+
+  .preference-slider-container {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Placeholder styling to match label fonts */
+::placeholder {
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="email"],
+textarea,
+select,
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+  font-size: 0.875rem; /* Consistent font size with labels */
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
 }

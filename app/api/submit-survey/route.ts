@@ -26,17 +26,15 @@ export async function POST(request: Request) {
       styleWords: "Describe your current style in 3 words",
       fabricPreferences:
         "What types of fabrics or textures do you love wearing?",
-      comfortVsStructure: "Which do you prefer: Comfort vs Structure",
-      simpleVsLayered: "Which do you prefer: Simple vs Layered",
-      neutralsVsColor: "Which do you prefer: Neutrals vs Colour",
+      comfortVsStructure: "Preference scale: Comfort (1) to Structure (10)",
+      simpleVsLayered: "Preference scale: Simple (1) to Layered (10)",
+      neutralsVsColor: "Preference scale: Neutrals (1) to Colour (10)",
       outfitBuilding: "How do you usually build an outfit?",
       outfitBuildingOther: "Other outfit building method (specified)",
       styleEvolution:
         "How has your style changed over the years? What's stayed the same?",
-      blendVsStandout:
-        "Do you feel more like yourself when you blend in or stand out?",
-      expressVsShift:
-        "Do you dress to express how you feel, or to shift how you feel?",
+      blendVsStandout: "Preference scale: Blend in (1) to Stand out (10)",
+      expressVsShift: "Preference scale: Express (1) to Shift (10)",
       styleFeedback:
         "What kind of feedback do you get on your style from others?",
       feelingPowerful: "What makes you feel powerful in your clothing?",
@@ -81,7 +79,51 @@ export async function POST(request: Request) {
         if (Array.isArray(value)) {
           formattedValue = value.join(", ");
         } else if (value !== null && value !== undefined && value !== "") {
-          formattedValue = String(value);
+          // Special handling for birthtime
+          if (key === "birthtime" && value === "unknown") {
+            formattedValue = "Unknown";
+          }
+          // Special handling for preference sliders
+          else if (key === "comfortVsStructure") {
+            const val = Number(value);
+            if (val <= 3)
+              formattedValue = `${val}/10 (Strong preference for Comfort)`;
+            else if (val <= 7)
+              formattedValue = `${val}/10 (Balanced between Comfort and Structure)`;
+            else formattedValue = `${val}/10 (Strong preference for Structure)`;
+          } else if (key === "simpleVsLayered") {
+            const val = Number(value);
+            if (val <= 3)
+              formattedValue = `${val}/10 (Strong preference for Simple)`;
+            else if (val <= 7)
+              formattedValue = `${val}/10 (Balanced between Simple and Layered)`;
+            else formattedValue = `${val}/10 (Strong preference for Layered)`;
+          } else if (key === "neutralsVsColor") {
+            const val = Number(value);
+            if (val <= 3)
+              formattedValue = `${val}/10 (Strong preference for Neutrals)`;
+            else if (val <= 7)
+              formattedValue = `${val}/10 (Balanced between Neutrals and Colour)`;
+            else formattedValue = `${val}/10 (Strong preference for Colour)`;
+          } else if (key === "blendVsStandout") {
+            const val = Number(value);
+            if (val <= 3)
+              formattedValue = `${val}/10 (Strong preference for Blending in)`;
+            else if (val <= 7)
+              formattedValue = `${val}/10 (Balanced between Blending in and Standing out)`;
+            else
+              formattedValue = `${val}/10 (Strong preference for Standing out)`;
+          } else if (key === "expressVsShift") {
+            const val = Number(value);
+            if (val <= 3)
+              formattedValue = `${val}/10 (Strong preference for Expressing current feelings)`;
+            else if (val <= 7)
+              formattedValue = `${val}/10 (Balanced between Expressing and Shifting feelings)`;
+            else
+              formattedValue = `${val}/10 (Strong preference for Shifting feelings)`;
+          } else {
+            formattedValue = String(value);
+          }
         } else {
           // Skip empty values
           continue;
