@@ -124,6 +124,9 @@ export default function SurveyForm() {
   // Form error state
   const [errors, setErrors] = useState<ErrorState>({});
 
+  // Track if user has attempted to submit the form
+  const [submissionAttempted, setSubmissionAttempted] = useState(false);
+
   // Form submission state
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -341,6 +344,9 @@ export default function SurveyForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Set that user has attempted to submit
+    setSubmissionAttempted(true);
+
     if (!validateForm()) {
       // Scroll to the first error
       const firstErrorElement = document.querySelector(".text-red-500");
@@ -378,6 +384,96 @@ export default function SurveyForm() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  // Generate human-readable error summary
+  const getErrorSummary = () => {
+    const errorFields = Object.keys(errors);
+    if (errorFields.length === 0) return null;
+
+    // Map field names to more user-friendly labels
+    const fieldLabels: Record<string, string> = {
+      name: "Your Name",
+      birthdate: "Birth Date",
+      birthtime: "Birth Time",
+      birthplace: "Place of Birth",
+      musicGenres: "Music Genres",
+      artists: "Artists or Bands",
+      moviesShows: "Movies or Shows",
+      subcultures: "Subcultures",
+      fashionAttitude: "Fashion Attitude",
+      styleIcons: "Style Icons",
+      styleWords: "Style Words",
+      outfitBuilding: "Outfit Building",
+      styleEvolution: "Style Evolution",
+      blendVsStandout: "Blend vs Standout Preference",
+      expressVsShift: "Express vs Shift Preference",
+      styleFeedback: "Style Feedback",
+      feelingPowerful: "Feeling Powerful",
+      styleAvoidance: "Style Avoidance",
+      styleRuts: "Style Ruts",
+      wardrobeStory: "Wardrobe Story",
+      fabricDislikes: "Fabric Dislikes",
+      fabricImportance: "Fabric Importance",
+      styleCommunication: "Style Communication",
+      becomingPerson: "The Person You're Becoming",
+      pastStyle: "Past Style",
+      dreamWardrobe: "Dream Wardrobe",
+    };
+
+    // Function to scroll to a specific field
+    const scrollToField = (field: string) => {
+      // Handle special case for birthdate/birthtime
+      if (field === "birthdate" || field === "birthtime") {
+        field = "birthdate"; // Both are in the DateTimeInput component
+      }
+
+      // First try to find an element with the field name as id or name
+      let selector = `[name="${field}"]`;
+
+      // Special handling for nested fields
+      if (field === "styleWords") {
+        selector = `[name="styleWords.word1"]`;
+      }
+
+      const element = document.querySelector(selector);
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    };
+
+    const errorItems = errorFields.map((field) => {
+      // Handle the special case of styleWords which is an object
+      if (field === "styleWords") {
+        return {
+          id: field,
+          label: "Style Words (all three words are required)",
+        };
+      }
+      return { id: field, label: fieldLabels[field] || field };
+    });
+
+    return (
+      <div className="error-summary">
+        <h3>Great so far, but there's a few things that got missed out:</h3>
+        <ul>
+          {errorItems.map((item) => (
+            <li key={item.id} className="mb-1">
+              <button
+                type="button"
+                onClick={() => scrollToField(item.id)}
+                className="text-red-600 hover:text-red-800 underline focus:outline-none text-left"
+              >
+                {item.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   };
 
   if (submitted) {
@@ -1269,6 +1365,9 @@ export default function SurveyForm() {
                   your wardrobe.
                 </p>
               </div>
+              {submissionAttempted &&
+                Object.keys(errors).length > 0 &&
+                getErrorSummary()}
               <button
                 type="submit"
                 disabled={submitting}
