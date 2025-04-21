@@ -23,167 +23,175 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
   dateName,
   timeName,
 }) => {
-  // Split the dateValue into year, month, and day components
-  const [year, setYear] = useState<string>("");
-  const [month, setMonth] = useState<string>("");
-  const [day, setDay] = useState<string>("");
+  // Parse the date value into day, month, year
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
+  const [isTimeUnknown, setIsTimeUnknown] = useState(false);
 
-  // Initialize the component with the current dateValue if it exists
+  // Initialize the date fields from the dateValue
   useEffect(() => {
     if (dateValue) {
-      const [yearPart, monthPart, dayPart] = dateValue.split("-");
-      setYear(yearPart || "");
-      setMonth(monthPart || "");
-      setDay(dayPart || "");
+      const [yearVal, monthVal, dayVal] = dateValue.split("-");
+      setYear(yearVal || "");
+      setMonth(monthVal || "");
+      setDay(dayVal || "");
     }
   }, [dateValue]);
 
-  // Handle changes to individual date components
-  const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newYear = e.target.value;
-    setYear(newYear);
-    updateFullDate(newYear, month, day);
+  // Check if time is unknown
+  useEffect(() => {
+    if (timeValue === "unknown") {
+      setIsTimeUnknown(true);
+    }
+  }, [timeValue]);
+
+  // Handle changes to individual date fields
+  const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDay(value);
+    // Create a synthetic event for the parent component
+    const syntheticEvent = {
+      target: {
+        name: dateName,
+        value: `${year}-${month.padStart(2, "0")}-${value.padStart(2, "0")}`,
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
+    onDateChange(syntheticEvent);
   };
 
   const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newMonth = e.target.value;
-    // Only allow 1-12
-    if (
-      newMonth === "" ||
-      (parseInt(newMonth) >= 1 && parseInt(newMonth) <= 12)
-    ) {
-      setMonth(newMonth);
-      updateFullDate(year, newMonth, day);
-    }
+    const value = e.target.value;
+    setMonth(value);
+    // Create a synthetic event for the parent component
+    const syntheticEvent = {
+      target: {
+        name: dateName,
+        value: `${year}-${value.padStart(2, "0")}-${day.padStart(2, "0")}`,
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
+    onDateChange(syntheticEvent);
   };
 
-  const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDay = e.target.value;
-    // Only allow 1-31
-    if (newDay === "" || (parseInt(newDay) >= 1 && parseInt(newDay) <= 31)) {
-      setDay(newDay);
-      updateFullDate(year, month, newDay);
-    }
+  const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setYear(value);
+    // Create a synthetic event for the parent component
+    const syntheticEvent = {
+      target: {
+        name: dateName,
+        value: `${value}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`,
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
+    onDateChange(syntheticEvent);
   };
 
-  // Create a synthetic event to update the parent component
-  const updateFullDate = (
-    yearValue: string,
-    monthValue: string,
-    dayValue: string
-  ) => {
-    // Only update if we have valid values for all three parts
-    if (yearValue && monthValue && dayValue) {
-      // Format month and day with leading zeros if needed
-      const formattedMonth = monthValue.padStart(2, "0");
-      const formattedDay = dayValue.padStart(2, "0");
-
-      // Create the YYYY-MM-DD format
-      const fullDate = `${yearValue}-${formattedMonth}-${formattedDay}`;
-
-      // Create a synthetic event
+  // Handle the unknown time checkbox
+  const handleTimeUnknownChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsTimeUnknown(e.target.checked);
+    if (e.target.checked) {
+      // Create a synthetic event for the parent component with empty value
       const syntheticEvent = {
         target: {
-          name: dateName,
-          value: fullDate,
+          name: timeName,
+          value: "unknown",
         },
       } as React.ChangeEvent<HTMLInputElement>;
-
-      // Call the parent's onChange handler
-      onDateChange(syntheticEvent);
+      onTimeChange(syntheticEvent);
+    } else {
+      // Reset to default time if unchecked
+      const syntheticEvent = {
+        target: {
+          name: timeName,
+          value: "00:00",
+        },
+      } as React.ChangeEvent<HTMLInputElement>;
+      onTimeChange(syntheticEvent);
     }
   };
 
   return (
     <div className="w-full">
-      <label className="question-label required">
-        Full Birthdate (If time is unknown, put 00:00am)
-      </label>
+      <label className="question-label required">Full Birthdate</label>
 
-      <div className="date-time-picker">
-        <div className="custom-date-input">
-          <div className="relative flex space-x-2">
-            {/* Day input */}
-            <div className="flex-1">
-              <label className="block text-xs text-gray-500 mb-1">Day</label>
-              <input
-                type="number"
-                min="1"
-                max="31"
-                value={day}
-                onChange={handleDayChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 appearance-none bg-white"
-                placeholder="DD"
-              />
-            </div>
-
-            {/* Month input */}
-            <div className="flex-1">
-              <label className="block text-xs text-gray-500 mb-1">Month</label>
-              <input
-                type="number"
-                min="1"
-                max="12"
-                value={month}
-                onChange={handleMonthChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 appearance-none bg-white"
-                placeholder="MM"
-              />
-            </div>
-
-            {/* Year input */}
-            <div className="flex-1">
-              <label className="block text-xs text-gray-500 mb-1">Year</label>
-              <input
-                type="number"
-                min="1900"
-                max="2024"
-                value={year}
-                onChange={handleYearChange}
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 appearance-none bg-white"
-                placeholder="YYYY"
-              />
-            </div>
-
-            {/* Hidden input to store the actual date value in YYYY-MM-DD format */}
-            <input type="hidden" name={dateName} value={dateValue} />
-          </div>
-          {dateError && (
-            <span className="text-red-500 text-xs mt-2 block">{dateError}</span>
-          )}
+      <div className="date-time-picker" style={{ gap: "0.5rem" }}>
+        <div className="date-field">
+          <input
+            type="number"
+            name={`${dateName}-day`}
+            value={day}
+            onChange={handleDayChange}
+            className="w-full rounded-lg border border-gray-300 px-2 py-3 appearance-none bg-white"
+            placeholder="DD"
+            min="1"
+            max="31"
+          />
         </div>
 
-        <div className="custom-time-input mt-4">
-          <label className="block text-xs text-gray-500 mb-1">Time</label>
-          <div className="relative">
-            <input
-              type="time"
-              name={timeName}
-              value={timeValue}
-              onChange={onTimeChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 appearance-none bg-white"
-            />
-            <div className="date-time-icon">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="text-gray-500"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                  clipRule="evenodd"
-                />
-              </svg>
+        <div className="date-field">
+          <input
+            type="number"
+            name={`${dateName}-month`}
+            value={month}
+            onChange={handleMonthChange}
+            className="w-full rounded-lg border border-gray-300 px-2 py-3 appearance-none bg-white"
+            placeholder="MM"
+            min="1"
+            max="12"
+          />
+        </div>
+
+        <div className="date-field">
+          <input
+            type="number"
+            name={`${dateName}-year`}
+            value={year}
+            onChange={handleYearChange}
+            className="w-full rounded-lg border border-gray-300 px-2 py-3 appearance-none bg-white"
+            placeholder="YYYY"
+            min="1900"
+            max="2100"
+          />
+        </div>
+
+        <div className="time-field">
+          <input
+            type="time"
+            name={timeName}
+            value={isTimeUnknown ? "" : timeValue || "00:00"}
+            onChange={onTimeChange}
+            className="w-full rounded-lg border border-gray-300 px-2 py-3 appearance-none bg-white"
+            disabled={isTimeUnknown}
+            placeholder="00:00"
+          />
+        </div>
+
+        <div
+          className="unknown-time-checkbox"
+          style={{ paddingTop: 0, display: "flex", alignItems: "center" }}
+        >
+          <div className="checkbox-table">
+            <div className="checkbox-cell">
+              <input
+                type="checkbox"
+                checked={isTimeUnknown}
+                onChange={handleTimeUnknownChange}
+                className="form-checkbox h-5 w-5 text-indigo-600 mobile-checkbox"
+              />
+            </div>
+            <div className="label-cell">
+              <span className="text-sm text-gray-700">Unknown</span>
             </div>
           </div>
-          {timeError && (
-            <span className="text-red-500 text-xs mt-2 block">{timeError}</span>
-          )}
         </div>
       </div>
+
+      {dateError && (
+        <span className="text-red-500 text-xs mt-2 block">{dateError}</span>
+      )}
+      {timeError && (
+        <span className="text-red-500 text-xs mt-2 block">{timeError}</span>
+      )}
     </div>
   );
 };
