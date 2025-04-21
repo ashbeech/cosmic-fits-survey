@@ -215,6 +215,41 @@ input[type="date"]:not(:valid):not(:focus)::before {
   color: #9ca3af;
 }
 
+/* Remove number input spinners (arrows) from Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove number input spinners from Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Style for focus states */
+.custom-date-input input:focus,
+.custom-time-input input:focus {
+  border-color: #6366f1;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .date-time-picker {
+    flex-direction: row;
+  }
+
+  .custom-date-input {
+    flex: 2;
+  }
+
+  .custom-time-input {
+    flex: 1;
+  }
+}
+
 /* Active time input placeholder */
 input[type="time"]:not(:disabled):not(:valid):not(:focus)::before {
   content: "00:00";
