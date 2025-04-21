@@ -34,8 +34,9 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
     if (dateValue) {
       const [yearVal, monthVal, dayVal] = dateValue.split("-");
       setYear(yearVal || "");
-      setMonth(monthVal || "");
-      setDay(dayVal || "");
+      // Remove leading zeros for display
+      setMonth(monthVal ? parseInt(monthVal, 10).toString() : "");
+      setDay(dayVal ? parseInt(dayVal, 10).toString() : "");
     }
   }, [dateValue]);
 
@@ -49,12 +50,20 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
   // Handle changes to individual date fields
   const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setDay(value);
-    // Create a synthetic event for the parent component
+    // Store the value without leading zeros
+    if (value === "" || value === "0") {
+      setDay("");
+    } else {
+      setDay(parseInt(value, 10).toString());
+    }
+    // Create a synthetic event for the parent component with proper formatting
+    const paddedDay = value && value !== "0" ? value.padStart(2, "0") : "";
+    const paddedMonth = month && month !== "0" ? month.padStart(2, "0") : "";
+
     const syntheticEvent = {
       target: {
         name: dateName,
-        value: `${year}-${month.padStart(2, "0")}-${value.padStart(2, "0")}`,
+        value: `${year}-${paddedMonth}-${paddedDay}`,
       },
     } as React.ChangeEvent<HTMLInputElement>;
     onDateChange(syntheticEvent);
@@ -62,12 +71,20 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
 
   const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setMonth(value);
-    // Create a synthetic event for the parent component
+    // Store the value without leading zeros
+    if (value === "" || value === "0") {
+      setMonth("");
+    } else {
+      setMonth(parseInt(value, 10).toString());
+    }
+    // Create a synthetic event for the parent component with proper formatting
+    const paddedMonth = value && value !== "0" ? value.padStart(2, "0") : "";
+    const paddedDay = day && day !== "0" ? day.padStart(2, "0") : "";
+
     const syntheticEvent = {
       target: {
         name: dateName,
-        value: `${year}-${value.padStart(2, "0")}-${day.padStart(2, "0")}`,
+        value: `${year}-${paddedMonth}-${paddedDay}`,
       },
     } as React.ChangeEvent<HTMLInputElement>;
     onDateChange(syntheticEvent);
@@ -77,10 +94,13 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
     const value = e.target.value;
     setYear(value);
     // Create a synthetic event for the parent component
+    const paddedMonth = month && month !== "0" ? month.padStart(2, "0") : "";
+    const paddedDay = day && day !== "0" ? day.padStart(2, "0") : "";
+
     const syntheticEvent = {
       target: {
         name: dateName,
-        value: `${value}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`,
+        value: `${value}-${paddedMonth}-${paddedDay}`,
       },
     } as React.ChangeEvent<HTMLInputElement>;
     onDateChange(syntheticEvent);
@@ -122,7 +142,7 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
             value={day}
             onChange={handleDayChange}
             className="w-full rounded-lg border border-gray-300 px-2 py-3 appearance-none bg-white"
-            placeholder="DD"
+            placeholder="Day"
             min="1"
             max="31"
           />
@@ -135,7 +155,7 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
             value={month}
             onChange={handleMonthChange}
             className="w-full rounded-lg border border-gray-300 px-2 py-3 appearance-none bg-white"
-            placeholder="MM"
+            placeholder="Month"
             min="1"
             max="12"
           />
@@ -148,7 +168,7 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
             value={year}
             onChange={handleYearChange}
             className="w-full rounded-lg border border-gray-300 px-2 py-3 appearance-none bg-white"
-            placeholder="YYYY"
+            placeholder="Year"
             min="1900"
             max="2100"
           />
